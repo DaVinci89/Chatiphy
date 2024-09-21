@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("<h1>CHATIPHY</h1><br><p><b>Main Page</b></p>")
+    template = "post_maker/index.html"
+    return render(request, template)
 
-def group_posts(request, page):
-    return HttpResponse(f"<h1>CHATIPHY</h1><br><p>Posts filtered by Groups</p><br><b><i>{page}</i></b>")
+def group_posts(request, page=None):
+    template = "post_maker/group_posts.html"
+    return render(request, template)
