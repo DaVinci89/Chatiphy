@@ -4,8 +4,25 @@ from django.http import HttpResponse
 
 def index(request):
     template = "post_maker/index.html"
-    return render(request, template)
+    text = "This will be the main page of the project."
+    context = {
+        "descr":text,
+    }
+    return render(request, template, context)
 
-def group_posts(request, page=None):
+def group_posts(request):
     template = "post_maker/group_posts.html"
-    return render(request, template)
+    text = "There will be information about groups of the project Chatiphy"
+    context = {
+        "descr":text,
+    }
+    return render(request, template, context)
+
+def group_posts_page(request, page):
+    template = "post_maker/group_posts_page.html"
+    text = "There will be information about group chosen by the user"
+    context = {
+        "page":page,
+        "descr":text,
+    }
+    return render(request, template, context)
