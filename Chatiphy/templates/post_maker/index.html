@@ -1,4 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
     <p><b>{{ descr }}</b></p>
+    <br>
+    <a href="{% url 'post_maker:group_posts' %}">Groups</a>
 {% endblock %}
