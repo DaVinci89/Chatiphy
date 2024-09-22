@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>{{ descr }}</p>
+    <p>{{ descr|safe }}</p>
     <br>
     {{ page }}
     <br>

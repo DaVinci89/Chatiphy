@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 def index(request):
     template = "post_maker/index.html"
-    text = "This will be the main page of the project."
+    text = "<b>This will be the main page of the project.</b>"
     context = {
         "descr":text,
     }
@@ -12,7 +12,7 @@ def index(request):
 
 def group_posts(request):
     template = "post_maker/group_posts.html"
-    text = "There will be information about groups of the project Chatiphy"
+    text = "<b>There will be information about groups of the project Chatiphy</b>"
     context = {
         "descr":text,
     }
@@ -20,7 +20,7 @@ def group_posts(request):
 
 def group_posts_page(request, page):
     template = "post_maker/group_posts_page.html"
-    text = "There will be information about group chosen by the user"
+    text = "<b>There will be information about group chosen by the user</b>"
     context = {
         "page":page,
         "descr":text,
