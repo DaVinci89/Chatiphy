@@ -1,12 +1,12 @@
 from django.shortcuts import render
-
+from .models import Post
 from django.http import HttpResponse
 
 def index(request):
     template = "post_maker/index.html"
-    text = "<b>This will be the main page of the project.</b>"
+    posts = Post.objects.order_by("-pub_date")[:10]
     context = {
-        "descr":text,
+        "posts":posts,
     }
     return render(request, template, context)
 
