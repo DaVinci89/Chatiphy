@@ -1,28 +1,33 @@
-from django.shortcuts import render
-from .models import Post
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from .models import Post, Group
+
 
 def index(request):
     template = "post_maker/index.html"
     posts = Post.objects.order_by("-pub_date")[:10]
     context = {
-        "posts":posts,
+        "posts": posts,
     }
     return render(request, template, context)
+
 
 def group_posts(request):
     template = "post_maker/group_posts.html"
-    text = "<b>There will be information about groups of the project Chatiphy</b>"
+    text = "<h2><b>Groups</b><h2>"
+    groups = Group.objects.all()[:10]
     context = {
-        "descr":text,
+        "header": text,
+        "groups": groups,
     }
     return render(request, template, context)
 
+
 def group_posts_page(request, page):
     template = "post_maker/group_posts_page.html"
-    text = "<b>There will be information about group chosen by the user</b>"
+    group = get_object_or_404(Group, slug=page)
+    posts = Post.objects.filter(group=group).order_by("-pub_date")
     context = {
-        "page":page,
-        "descr":text,
+        "group": group,
+        "posts": posts,
     }
     return render(request, template, context)

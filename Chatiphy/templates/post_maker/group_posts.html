@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>{{ descr|safe }}</p>
+    {{ header|safe }}
+    <br>
+    {% for group in groups %}
+        <div class="group">
+            <a href="{% url 'post_maker:group_page' group.slug %}">{{ group.title }}</a>
+            <br>
+            <p>{{ group.description }}</p>
+        </div>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
     <br>
     <a href="{% url 'post_maker:index' %}">Main</a>
 {% endblock %}

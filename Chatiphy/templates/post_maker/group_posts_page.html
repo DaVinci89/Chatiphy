@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>{{ descr|safe }}</p>
+    <h2>{{ group.title }}</h2>
     <br>
-    {{ page }}
+    {{ group.description }}
+    <br>
+    {% for post in posts %}
+        <ul>
+            <li>Author: {{post.author}}</li>
+            <li>Date: {{post.pub_date|date:"d E Y"}}</li>
+        </ul>
+        <p>{{post.text}}</p>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
     <br>
     <a href="{% url 'post_maker:index' %}">Main</a>
 {% endblock %}
