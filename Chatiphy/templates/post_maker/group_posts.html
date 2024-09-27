@@ -2,6 +2,8 @@
 {% block content %}
     {{ header|safe }}
     <br>
+    <p>{{ groups_count }} groups: </p>
+    <br>
     {% for group in groups %}
         <div class="group">
             <a href="{% url 'post_maker:group_page' group.slug %}">{{ group.title }}</a>

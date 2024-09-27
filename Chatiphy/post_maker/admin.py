@@ -18,7 +18,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ("title", "slug", "description")
+    list_display = ("pk", "title", "slug", "description")
     list_editable = ("description",)
     # Auto-add slug field with title text
     prepopulated_fields = {"slug": ("title",)}

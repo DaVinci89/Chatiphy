@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <ul>
-            <li>Author: {{post.author}}</li>
-            <li>Date: {{post.pub_date|date:"d E Y"}}</li>
-        </ul>
-        <p>{{post.text}}</p>
-        {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
+    <div class="container">
+        {% for post in posts %}
+            <ul>
+                <li>Author: {{post.author}}</li>
+                <li>Date: {{post.pub_date|date:"d E Y"}}</li>
+                <li>Group: {{ post.group }}</li>
+            </ul>
+            <p>{{post.text}}</p>
+            {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
+    </div>
     <br>
     <a href="{% url 'post_maker:group_posts' %}">Groups</a>
 {% endblock %}
