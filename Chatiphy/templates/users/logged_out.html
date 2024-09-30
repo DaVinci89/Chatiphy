@@ -1,14 +1,7 @@
-{% extends "base.html" %}
-{% block title %}Logged out{% endblock %}
-{% block content %}
-    <div class="row justify-content-center">
-        <div class="col-md-8 p-5">
-            <div class="card">
-                <div class="card-header">Quit</div>
-                <div class="card-body">
-                    <p>You logged out. Waiting for you again.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+{% extends 'base_form.html' %}
+{% block title %}Log Out{% endblock %}
+{% block card-header %}Log Out{% endblock %}
+{% block form %}
+    <p>You logged out. Waiting for you again.</p>
 {% endblock %}
+{% block button %}{% endblock %}
