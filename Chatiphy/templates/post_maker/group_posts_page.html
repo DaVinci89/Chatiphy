@@ -4,7 +4,7 @@
     <br>
     {{ group.description }}
     <br>
-    {% for post in posts %}
+    {% for post in page_obj %}
         <ul>
             <li>Author: {{post.author}}</li>
             <li>Date: {{post.pub_date|date:"d E Y"}}</li>
@@ -12,6 +12,8 @@
         <p>{{post.text}}</p>
         {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
+    <br>
+    {% include 'post_maker/includes/paginator.html' %}
     <br>
     <a href="{% url 'post_maker:index' %}">Main</a>
 {% endblock %}

@@ -4,7 +4,7 @@
     <br>
     <p>{{ groups_count }} groups: </p>
     <br>
-    {% for group in groups %}
+    {% for group in page_obj %}
         <div class="group">
             <a href="{% url 'post_maker:group_page' group.slug %}">{{ group.title }}</a>
             <br>
@@ -12,6 +12,8 @@
         </div>
         {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
+    <br>
+    {% include 'post_maker/includes/paginator.html' %}
     <br>
     <a href="{% url 'post_maker:index' %}">Main</a>
 {% endblock %}

@@ -10,6 +10,7 @@
 <body>
     <header>{% include "includes/header.html" %}</header>
     <main>
+        {% block header %}{% endblock %}
         <br>
         {% block content %}
         {% endblock %}
