@@ -1,0 +1,8 @@
+{% extends 'base_form.html' %}
+{% block title %}Thank you{% endblock %}
+{% block card-header %}Feedback was sent succesfully.{% endblock %}
+{% block form %}
+    <p>Your opinion is important for us.</p>
+    <a href="{% url 'post_maker:index'%}" class="btn btn-link">Back to Main Page</a>
+{% endblock %}
+{% block button %}{% endblock %}
