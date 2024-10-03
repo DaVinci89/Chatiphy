@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Group
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from .forms import FeedbackForm
 
 
 def index(request):
@@ -34,7 +36,7 @@ def group_posts(request):
     }
     return render(request, template, context)
 
-
+@login_required
 def group_posts_page(request, page):
     template = "post_maker/group_posts_page.html"
     group = get_object_or_404(Group, slug=page)
@@ -47,3 +49,14 @@ def group_posts_page(request, page):
         "page_obj":page_obj,
     }
     return render(request, template, context)
+
+def feedback(request):
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            return redirect("post_maker/thank-you")
+        return render(request, "post_maker/feedback.html", {"form":form})
+    form = FeedbackForm()
+    return render(request, "post_maker/feedback.html", {"form":form})
+
+
