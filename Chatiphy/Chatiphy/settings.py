@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'about.apps.AboutConfig',
     'post_maker.apps.PostMakerConfig',
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
