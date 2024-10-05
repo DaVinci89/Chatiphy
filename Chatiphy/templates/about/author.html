@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}About author{% endblock %}
-{% block header %}About me{% endblock %}
+{% block header %}<h2>About me</h2>{% endblock %}
 {% block content %}
+    <aside>
+        <img width="20%" height="5%" src="{% static 'img/author.jpg' %}" alt="author">
+    </aside>
     <br>
-    <div class="container py-5">
+    <div class="container-fluid py-5 col-md-6 text-center">
+        <article>
         <p><b>Hello everyone!</b></p>
         <i><p>My name is Igor Olkhin, and I am the pioneer and founder of Chatiphy, a social network for bloggers.</p>
         <p> This project is the first of many ideas and is the beginning of my journey as a web developer. I am sure that this wonderful platform will find positive feedback in the hearts of users, and will definitely find its audience. The functionality will be constantly updated as I study new technologies and programming.</p>
@@ -13,8 +18,9 @@
         <p>First of all, I would like to thank a wonderful girl and the love of my life - <b>Evgenia</b>.
         Also, a special thank you to our cat <b>Basia</b>, who acted as an antidepressant and "rubber duck" for me.</p>
             <p>Welcome to <strong>Chatiphy</strong>, and may your experience, like my work on the project, be interesting, useful and enjoyable.</p></i>
+    </article>
     </div>
-    <div class="container my-5 py-5">
-        <a href="https://cvdoc.ai/r/2860L9a4jg">My CV</a>
+    <div class="container my-5 py-5 text-center">
+        <a class="page-link" href="https://cvdoc.ai/r/2860L9a4jg">My CV</a>
     </div>
 {% endblock %}
