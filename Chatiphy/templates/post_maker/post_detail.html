@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Post: {{ post.text[:30] }}{% endblock %}
+{% block header %}<h1>All posts by author <i>{{ username }}</i></h1>{% endblock %}
+{% block content %}
+    <div class="container py-5">
+        <h3>Posts count: {{ count }}</h3>
+        <br>
+        <hr>
+        <br>
+        <article>
+            <h4>Last post</h4>
+            <ul class="list-group">
+                <li class="list-group-item">Publish date: {{ latest.pub_date|date:"d E Y H:i:s" }}</li>
+                <li class="list-group-item">Group: {{ latest.group }}</li>
+            </ul>
+            <p>{{ latest_text }}</p>
+        </article>
+        <br>
+        <hr>
+        <br>
+        <h4>Other posts by {{ username }}</h4>
+        {% for post in page_obj %}
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' post.pk %}">Date: {{post.pub_date|date:"d E Y H:i:s"}}</a></li>
+            </ul>
+            {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
+        <br>
+        {% include 'post_maker/includes/paginator.html' %}
+        <br>
+        <a href="{% url 'post_maker:group_posts' %}">Groups</a>
+    </div>
+{% endblock %}

@@ -1,9 +1,17 @@
 {% load static %}
-<img width="20%" height="5%" src="{% static 'img/logo.png' %}" alt="logo">
-<a href="{% url 'users:password_change' %}" class="btn btn-link">Change password</a>
-<h1>CHATIPHY</h1><br>
-<div class="container">
-    <div class="card">
+<div class="container row py-15">
+    <div class="col-md-3">
+        <a href="/"><img width="100%" height="100%" src="{% static 'img/logo.png' %}" alt="logo"></a>
+    </div>
+    <div class="col-md-3">
+        <h2 style="color:#003366">CHATIPHY</h2><br>
+        <p><span style="font-style:italic; color:#003366">Let your soul speak...</span></p>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'users:password_change' %}" class="btn btn-link">Change password</a><br>
+    </div>
+
+    <div class="card col-md-3">
         <div class="card-body">
             <form class="form-inline" action="/">
                 <div class="form-row">

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
 from django.conf import settings
 from .models import Post, Group
 from django.core.paginator import Paginator
@@ -72,4 +73,28 @@ def feedback(request):
 
 def feedback_success(request):
     return render(request, "post_maker/feedback_success.html")
+
+def profile(request, username):
+    template = "post_maker/profile.html"
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=user).order_by("-pub_date")
+    latest = posts.latest("pub_date")
+    latest_text = latest.text
+    count = posts.count()
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {"username":username,
+               "count":count,
+               "page_obj":page_obj,
+               "latest":latest,
+               "latest_text":latest_text}
+    return render(request, template, context)
+
+def post_detail(request, post_id):
+    template = "post_maker/post_detail.html"
+    post = get_object_or_404(Post, pk=post_id)
+    context = {"post":post}
+    return render(request, template, context)
 
