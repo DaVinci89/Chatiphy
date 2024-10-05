@@ -1,5 +1,5 @@
 from django import forms
-
+# Forms validate
 
 def validate_not_empty(value):
     if value == "":
