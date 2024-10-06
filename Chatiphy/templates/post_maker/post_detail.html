@@ -22,8 +22,6 @@
             <p>{{ post.text }}</p>
         </article>
         <br>
-        {% include 'post_maker/includes/paginator.html' %}
-        <br>
         <a href="{% url 'post_maker:group_posts' %}">Groups</a>
     </div>
 {% endblock %}
