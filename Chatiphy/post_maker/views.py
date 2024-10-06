@@ -95,6 +95,10 @@ def profile(request, username):
 def post_detail(request, post_id):
     template = "post_maker/post_detail.html"
     post = get_object_or_404(Post, pk=post_id)
-    context = {"post":post}
+    group = get_object_or_404(Group, slug=post.group.slug)
+    count = Post.objects.all().count()
+    context = {"post":post,
+               "group":group,
+               "count":count}
     return render(request, template, context)
 
