@@ -18,8 +18,10 @@ def index(request):
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    show_toast = request.session.pop('show_toast', False)
     context = {
         "page_obj": page_obj,
+        "show_toast":show_toast,
     }
     return render(request, template, context)
 
@@ -53,6 +55,7 @@ def group_posts_page(request, page):
     }
     return render(request, template, context)
 
+@login_required
 def feedback(request):
     if request.method == "POST":
         form = FeedbackForm(request.POST)
@@ -71,9 +74,11 @@ def feedback(request):
     form = FeedbackForm()
     return render(request, "post_maker/feedback.html", {"form":form})
 
+@login_required
 def feedback_success(request):
     return render(request, "post_maker/feedback_success.html")
 
+@login_required
 def profile(request, username):
     template = "post_maker/profile.html"
     user = get_object_or_404(User, username=username)
@@ -92,6 +97,7 @@ def profile(request, username):
                "latest_text":latest_text}
     return render(request, template, context)
 
+@login_required
 def post_detail(request, post_id):
     template = "post_maker/post_detail.html"
     post = get_object_or_404(Post, pk=post_id)
