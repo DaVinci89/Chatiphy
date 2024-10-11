@@ -5,14 +5,14 @@
         <aside class="col-12 col-md-3">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Publish date: {{ post.pub_date|date:"d E Y H:i:s" }}</li>
-                {% if group %}
-                    <li class="list-group-item"><a href="{% url 'post_maker:group_page' group.slug %}">Group: {{ group.title }}</a></li>
+                {% if post.group %}
+                    <li class="list-group-item">
+                        Group: <a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group.title }}</a>
+                    </li>
                 {% endif %}
-                <li class="list-group-item">Author: {{ post.author }}</li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    All posts: <span>{{ count }}</span>
+                <li class="list-group-item">
+                    Author: <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a>
                 </li>
-                <li class="list-group-item"><a href="{% url 'post_maker:profile' post.author %}">All posts by {{ post.author }}</a></li>
             </ul>
         </aside>
         <br>
@@ -22,6 +22,13 @@
             <p>{{ post.text }}</p>
         </article>
         <br>
-        <a href="{% url 'post_maker:group_posts' %}">Groups</a>
+        <hr>
+        <br>
+        {% if request.user == post.author %}
+        <div class="text-center">
+            <a class="btn btn-primary" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
+        </div>
+        {% endif %}
+        <br>
     </div>
 {% endblock %}

@@ -1,0 +1,4 @@
+{% extends 'base_form.html' %}
+{% block title %}{% if is_edit %}Edit Post{% else %}New Post{% endif %}{% endblock %}
+{% block card-header %}Write your post:{% endblock %}
+{% block button %}{% if is_edit %}Edit{% else %}Publish{% endif %}{% endblock %}

@@ -1,48 +1,70 @@
 {% load static %}
-<nav class="navbar">
-    <div class="container row py-15">
-        <div class="col-md-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="">
             <a href="/"><img width="100%" height="100%" src="{% static 'img/logo.png' %}" alt="logo"></a>
         </div>
-        <div class="col-md-4">
-            <h2 style="color:#003366">CHATIPHY</h2>
-            <p><span style="font-style:italic; color:#003366">Let your soul speak...</span></p>
-        </div>
-        <div class="card col-md-4">
-            <div class="card-body">
-                <form class="form-inline" action="/">
-                    <div class="form-row">
-                        <input name="q" class="form-control form-control-lg" type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
-                        <button class="btn" type="submit">Find</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <br>
+        {% if user.is_authenticated %}
+        <p class="text-right"><span class="navbar-text ms-auto">Profile: <a href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a></span></p>        
+        {% endif %}
+        <button class="btn btn-primary navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+                <span class="navbar-toggler-icon"></span>
+                | | |
+        </button>
+        <br>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="nav nav-pills">
-            <li class="nav-item">
+            {% with request.resolver_match.view_name as view %}
+            <br>
+            <li class="nav-item {% if view == 'about:author' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'about:author' %}">About author</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if view == 'about:tech' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'about:tech' %}">Technologies</a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="#">New post</a>
+                <a class="nav-link" href="{% url 'post_maker:create_post' %}">New post</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if view == 'post_maker:group_posts' %}active{% endif %}">
+                <a class="nav-link link-light" href="{% url 'post_maker:group_posts' %}">Groups</a>
+            </li>
+            <li class="nav-item {% if view == 'users:password_change' %}active{% endif %}">
                 <a class="nav-link link-light" href="{% url 'users:password_change' %}">Change password</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if view == 'users:logout' %}active{% endif %}">
                 <a class="nav-link link-light" href="{% url 'users:logout' %}">Log Out</a>
             </li>
             {% else %}
-            <li class="nav-item">
+            <li class="nav-item {% if view == 'users:login' %}active{% endif %}">
                 <a class="nav-link link-light" href="{% url 'users:login' %}">Login</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if view == 'users:signup' %}active{% endif %}">
                 <a class="nav-link link-light" href="{% url 'users:signup' %}">Sign up</a>
             </li>
             {% endif %}
+            {% endwith %}
         </ul>
+        </div>
+        {% with request.resolver_match.view_name as view %}
+        {% if view == 'post_maker:index' %}
+        <div class="d-flex flex-column text-center mx-auto">
+            <h2 style="color:#003366">CHATIPHY</h2>
+            <p><span style="font-style:italic; color:#003366">Let your soul speak...</span></p>
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-inline" action="/">
+                        <div class="form-row">
+                            <input name="q" class="form-control form-control-lg" type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
+                            <br>
+                            <button class="btn" type="submit">Find</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+        {% endif %}
+        {% endwith %}       
     </div>
 </nav>

@@ -5,7 +5,7 @@ from .models import Post, Group
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .forms import FeedbackForm
+from .forms import FeedbackForm, CreatePostForm
 
 
 def index(request):
@@ -101,10 +101,35 @@ def profile(request, username):
 def post_detail(request, post_id):
     template = "post_maker/post_detail.html"
     post = get_object_or_404(Post, pk=post_id)
-    group = get_object_or_404(Group, slug=post.group.slug)
-    count = Post.objects.all().count()
-    context = {"post":post,
-               "group":group,
-               "count":count}
+    context = {"post":post,}
     return render(request, template, context)
+    
+@login_required
+def create_post(request):
+    if request.method == "POST":
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect("post_maker:profile", username = request.user.username)
+    else:
+        form = CreatePostForm()
+    return render(request, "post_maker/create_post.html", {"form":form})
+    
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        return redirect("post_maker:post_detail", post_id=post.pk)
+    if request.method == "POST":
+        form = CreatePostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("post_maker:post_detail", post_id=post.pk)
+    else:
+        form = CreatePostForm(instance=post)
+    context = {"form":form, "is_edit":True, "post":post}
+    return render(request, "post_maker/create_post.html", context)
+            
 

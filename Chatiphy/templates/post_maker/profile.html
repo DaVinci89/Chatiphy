@@ -7,27 +7,34 @@
         <br>
         <hr>
         <br>
+        {% if count > 0 %}
         <article>
             <h4>Last post</h4>
             <ul class="list-group">
-                <li class="list-group-item">Publish date: {{ latest.pub_date|date:"d E Y H:i:s" }}</li>
-                <li class="list-group-item">Group: {{ latest.group }}</li>
+                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' latest.pk %}">Publish date: {{ latest.pub_date|date:"d E Y H:i:s" }}</a></li>
+                <li class="list-group-item">Group: <a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></li>
             </ul>
             <p>{{ latest_text }}</p>
         </article>
         <br>
         <hr>
+        {% else %}
+        <h4>There is no posts yet</h4>
+        {% endif %}
         <br>
+        {% if count > 1 %}
         <h4>Other posts by {{ username }}</h4>
         {% for post in page_obj %}
             <ul class="list-group">
-                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' post.pk %}">Date: {{post.pub_date|date:"d E Y H:i:s"}}</a></li>
+                {% if post.pk != latest.pk %}
+                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' post.pk %}">Publish Date: {{post.pub_date|date:"d E Y H:i:s"}}</a></li>
+                {% endif %}
             </ul>
             {% if not forloop.last %}<hr>{% endif %}
         {% endfor %}
+        {% endif %}
         <br>
         {% include 'post_maker/includes/paginator.html' %}
         <br>
-        <a href="{% url 'post_maker:group_posts' %}">Groups</a>
     </div>
 {% endblock %}
