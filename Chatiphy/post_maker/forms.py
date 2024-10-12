@@ -1,4 +1,5 @@
 from django import forms
+from .models import Post, Group
 from .validators import validate_not_empty
 
 
@@ -8,3 +9,10 @@ class FeedbackForm(forms.Form):
     subject = forms.CharField(max_length=100)
     body = forms.CharField(widget=forms.Textarea)
     is_answered = forms.BooleanField()
+
+class CreatePostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ["text", "group"]
+        widgets = {"text" : forms.Textarea(attrs={"placeholder":"Your message..."})}
+        

@@ -1,0 +1,16 @@
+@media (min-width: 480px) {
+    .navbar-toggler {
+        display: none !important;
+    }
+}
+
+/* Завжди показуємо кнопку на менших екранах */
+@media (max-width: 480px) {
+    .navbar-toggler {
+        display: block !important;
+    }
+    .logo {
+        width: 100%;
+        height: 100%;
+    }
+}
