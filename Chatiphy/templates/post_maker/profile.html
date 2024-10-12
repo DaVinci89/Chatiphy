@@ -12,7 +12,9 @@
             <h4>Last post</h4>
             <ul class="list-group">
                 <li class="list-group-item"><a href="{% url 'post_maker:post_detail' latest.pk %}">Publish date: {{ latest.pub_date|date:"d E Y H:i:s" }}</a></li>
+                {% if latest.group %}
                 <li class="list-group-item">Group: <a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></li>
+                {% endif %}
             </ul>
             <p>{{ latest_text }}</p>
         </article>
