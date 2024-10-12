@@ -11,8 +11,11 @@ class SignUp(CreateView):
     # Define form class
     form_class = FormCreation
     # Redirecting to main page after successful register
-    success_url = reverse_lazy("post_maker:index")
+    success_url = reverse_lazy("users:login")
     template_name = "users/signup.html"
+
+    def form_valid(self, form):
+        return super().form_valid(form)
 
 class PasswordReset(PasswordResetView):
     def form_valid(self, form):
