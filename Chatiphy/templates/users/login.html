@@ -1,5 +1,12 @@
 {% extends 'base_form.html' %}
+{% load static %}
 {% block title %}Log In{% endblock %}
+{% block banner %}
+<div class="">
+    <a href="/"><img width="100%" height="100%" src="{% static 'img/logo.png' %}" alt="logo"></a>
+</div>
+<br>
+{% endblock %}
 {% block button %}Log In{% endblock %}
 {% block link %}
     <a href="{% url 'users:password_reset' %}" class="btn btn-link">Forget password?</a>

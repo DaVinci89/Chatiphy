@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-    <header>{% include "includes/header.html" %}</header>
+    <header>
+        {% block banner %}{% endblock %}
+        {% include "includes/header.html" %}</header>
     <main>    
         {% block header %}{% endblock %}
         <br>
