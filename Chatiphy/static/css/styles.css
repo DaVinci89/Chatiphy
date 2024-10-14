@@ -20,6 +20,9 @@
         align-items: center;
     }
     .search-form {
+        display: none;
+    }
+    .search-form-full {
         display: flex;
         align-items: center;
     }
@@ -27,9 +30,6 @@
     width: 250px; /* Контролюємо ширину поля пошуку */
 }
 
-.nav-link {
-    color: #003366; /* Колір посилання */
-}
 }
 
 /* Завжди показуємо кнопку на менших екранах */
@@ -37,4 +37,31 @@
     .navbar-toggler {
         display: block !important;
     }
+    .header-line {
+        display: flex;
+        justiphy-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+    .nav-panel {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-left: auto;
+
+    }
+    .profile-link {
+        display: flex;
+        align-items: center;
+    }
+    .search-form {
+        display: flex;
+        justify-content: center;
+    }
+    .search-form-full {
+        display: none;
+    }
+    .form-control {
+    width: 250px; /* Контролюємо ширину поля пошуку */
+}
 }
