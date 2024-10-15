@@ -11,13 +11,12 @@
 <body>
     <header>
         {% block banner %}{% endblock %}
-        {% include "includes/header.html" %}</header>
+        {% include "includes/header.html" %}
+    </header>
     <main>    
         {% block header %}{% endblock %}
-        <br>
         {% block content %}
         {% endblock %}
-        <br>
     </main>
     {% include "includes/footer.html" %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

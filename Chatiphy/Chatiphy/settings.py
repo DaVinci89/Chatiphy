@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%xnarfyo7%w@b^k8s(3^jgnj23gy-wxoh%lbm3l)kps&yxyqxe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost",
+                 "127.0.0.1",
+                 "testserver"]
 
 
 # Application definition
@@ -141,4 +144,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'chatiphy.mail@gmail.com'
 EMAIL_HOST_PASSWORD = 'vmzh qaow moau pvfb'
 DEFAULT_FROM_EMAIL = 'no-reply@chatiphy.gmail.com'
-
