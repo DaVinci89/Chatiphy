@@ -5,32 +5,32 @@
         <h2 class="navbar-brand" style="color:#003366">CHATIPHY</h2>
     </div>
     <div class="nav-panel">
-        <div class="search-form-full text-center">
-            <form class="form-inline" action="/">
-                <input name="q" class="form-control form-control-lg mr-sm-2 " type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
-                <button class="btn btn-primary" type="submit">Find</button>
+        <div class="search-form">
+        <form class="form-inline" action="/">
+
+                            <input name="q" class="form-control form-control-lg mr-sm-2 " type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
+
+
+
+                            <button class="btn btn-outline-success" type="submit">Find</button>
+
             </form>
-        </div>
+            </div>
         <div class="profile-link">
-            {% if user.is_authenticated %}
-            <p class="ms-auto"><span class="">Profile: <a class="nav-link" href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a></span></p>
-            {% endif %}
+    {% if user.is_authenticated %}
+
+        <p class="ms-auto"><span class="">Profile: <a class="nav-link" href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a></span></p>
+        {% endif %}
+            </div>
         </div>
     </div>
-</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <button class="btn btn-primary navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
-        <span class="navbar-toggler-icon"></span>
-        | | |
-    </button>
-    <div class="d-flex collapse navbar-collapse justify-content-end align-items-center d-none d-md-block" id="navbarNav"><br>
+    <button class="btn btn-primary navbar-toggler ms-auto d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+                <span class="navbar-toggler-icon"></span>
+                | | |
+        </button>
+        <div class="collapse navbar-collapse justify-content-end d-none d-md-block" id="navbarNav"><br>
         <ul class="nav ml-auto nav-pills">
-            <div class="search-form text-center d-inline-block">
-                <form class="form-inline" action="/">
-                    <input name="q" class="form-control form-control-lg mr-sm-2 d-inline-block" type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
-                    <button class="btn btn-primary d-inline-block" type="submit">Find</button>
-                </form>
-            </div>
             {% with request.resolver_match.view_name as view %}
             <li class="nav-item {% if view == 'about:author' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'about:author' %}">About author</a>
@@ -60,6 +60,20 @@
             </li>
             {% endif %}
             {% endwith %}
+
         </ul>
-    </div>
+
+            </div>
+
+
+
+
+
+
+        <br>
+
+
+
+
+
 </nav>
