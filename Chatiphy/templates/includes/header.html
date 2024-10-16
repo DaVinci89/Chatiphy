@@ -5,10 +5,10 @@
         <h2 class="navbar-brand" style="color:#003366">CHATIPHY</h2>
     </div>
     <div class="nav-panel">
-        <div class="search-form">
+        <div class="search-form-full">
             <form class="form-inline" action="/">
                 <input name="q" class="form-control form-control-lg mr-sm-2 " type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
-                <button class="btn btn-outline-success" type="submit">Find</button>
+                <button class="btn btn-primary" type="submit">Find</button>
             </form>
         </div>
         <div class="profile-link">
@@ -25,6 +25,12 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end d-none d-md-block" id="navbarNav"><br>
         <ul class="nav ml-auto nav-pills">
+            <div class="search-form">
+                <form class="form-inline" action="/">
+                    <input name="q" class="form-control form-control-lg mr-sm-2 " type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
+                    <button class="btn btn-primary" type="submit">Find</button>
+                </form>
+            </div>
             {% with request.resolver_match.view_name as view %}
             <li class="nav-item {% if view == 'about:author' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'about:author' %}">About author</a>
