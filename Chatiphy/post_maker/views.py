@@ -107,7 +107,7 @@ def post_detail(request, post_id):
 @login_required
 def create_post(request):
     if request.method == "POST":
-        form = CreatePostForm(request.POST)
+        form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -123,7 +123,7 @@ def edit_post(request, post_id):
     if request.user != post.author:
         return redirect("post_maker:post_detail", post_id=post.pk)
     if request.method == "POST":
-        form = CreatePostForm(request.POST, instance=post)
+        form = CreatePostForm(request.POST, files=request.FILES or None, instance=post)
         if form.is_valid():
             form.save()
             return redirect("post_maker:post_detail", post_id=post.pk)

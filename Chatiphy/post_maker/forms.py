@@ -13,6 +13,6 @@ class FeedbackForm(forms.Form):
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["text", "group"]
-        widgets = {"text" : forms.Textarea(attrs={"placeholder":"Your message..."})}
+        fields = ["text", "group", "image"]
+        widgets = {"text": forms.Textarea(attrs={"placeholder":"Your message..."})}
         

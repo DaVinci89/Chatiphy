@@ -12,7 +12,7 @@ def forbidden(request, exception):
     template = "core/403.html"
     return render(request, template, status=403)
 
-def server_error(request, exception):
+def server_error(request):
     template = "core/500.html"
     return render(request, template, status=500)
 

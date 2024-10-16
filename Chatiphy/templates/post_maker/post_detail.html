@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block title %}Post{% endblock %}
 {% block content %}
     <div class="container row">
@@ -17,6 +18,9 @@
         </aside>
         <br>
         <hr>
+        {% thumbnail post.image "200x200" crop=center upscale=True as img %}
+        <img class="card-img my-2" src="{{ img.url }}">
+        {% endthumbnail %}
         <br>
         <article class="col-12 col-md-9">
             <p>{{ post.text }}</p>

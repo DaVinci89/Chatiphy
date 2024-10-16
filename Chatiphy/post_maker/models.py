@@ -14,10 +14,36 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    group = models.ForeignKey(Group, on_delete=models.SET_NULL, related_name="posts", blank=True, null=True)
+    text = models.TextField(
+        help_text="Enter the text of post"
+    )
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Author",
+        related_name="posts"
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        related_name="posts",
+        blank=True,
+        null=True,
+        verbose_name="Group",
+        help_text="Choose the group"
+    )
+    image = models.ImageField(
+        "Post Image",
+        upload_to="post_maker/img",
+        blank=True
+    )
 
+    class Meta:
+        ordering = ('-pub_date',)
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
     def __str__(self):
-        return self.text
+        return self.text[:15]
