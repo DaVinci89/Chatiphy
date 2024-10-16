@@ -25,10 +25,10 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end d-none d-md-block" id="navbarNav"><br>
         <ul class="nav ml-auto nav-pills">
-            <div class="search-form">
+            <div class="search-form text-center d-inline-block">
                 <form class="form-inline" action="/">
-                    <input name="q" class="form-control form-control-lg mr-sm-2 " type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
-                    <button class="btn btn-primary" type="submit">Find</button>
+                    <input name="q" class="form-control form-control-lg mr-sm-2 d-inline-block" type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>
+                    <button class="btn btn-primary d-inline-block" type="submit">Find</button>
                 </form>
             </div>
             {% with request.resolver_match.view_name as view %}
