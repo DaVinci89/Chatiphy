@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}503 Unavailable{% endblock %}
+{% block content %}
+    <div class="container text-center">
+        <h1>Sorry, but our server is unavailable at this time...</h1>
+        <br>
+        <a class="btn btn-primary" href="{% url 'post_maker:index' %}">Go to Main Page</a>
+    </div>
+{% endblock %}

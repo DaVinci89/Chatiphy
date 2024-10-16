@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import handler404
-from core.views import page_not_found
 
 handler404 = 'core.views.page_not_found'
+handler400 = 'core.views.bad_request'
+handler403 = 'core.views.forbidden'
+handler500 = 'core.views.server_error'
+handler503 = 'core.views.unavailable'
 
 urlpatterns = [
     path('', include("post_maker.urls", namespace="post_maker")),
