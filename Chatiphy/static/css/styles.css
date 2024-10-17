@@ -50,7 +50,25 @@ nav.navbar {
 .profile:hover {
     text-decoration: none;
     background-color: #FAFA00;
+    color: #160085;
 }
+
+.profile:active {
+    text-decoration: none;
+    background-color: #FAFA00;;
+    color:  #160085;
+    transform: scale(0.98);
+}
+
+.profile:focus {
+    outline: none;
+    text-decoration: none;
+    background-color: #FAFA00;;
+    color:  #160085;
+    transform: scale(0.98);
+}
+
+
 
 .form-control {
     width: 250px; /* Контролюємо ширину поля пошуку */
@@ -65,9 +83,6 @@ nav.navbar {
 }
 
 @media (min-width: 480px) {
-    .navbar-toggler {
-        display: none !important;
-    }
 
     .search-form {
         display: none;
@@ -81,17 +96,6 @@ nav.navbar {
 
 /* Завжди показуємо кнопку на менших екранах */
 @media (max-width: 480px) {
-    .navbar-toggler {
-        display: block !important;
-    }
-
-    .btn-menu {
-        display: flex;
-        justify-content: end;
-        align-items: right;
-        margin-right: 30px;
-    }
-
     .search-form {
         display: flex;
         justify-content: center;
@@ -104,5 +108,11 @@ nav.navbar {
 
     .search-form-full {
         display: none;
+    }
+    .profile:active {
+        text-decoration: none;
+        background-color: #FAFA00;;
+        color:  #160085;
+        transform: scale(0.98);
     }
 }

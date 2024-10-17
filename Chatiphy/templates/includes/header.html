@@ -12,20 +12,14 @@
         </div>
         <div class="profile-link">
             {% if user.is_authenticated %}
-            {% with user.username|slice:":1" as first_letter %}
-            <a class="profile nav-link" href="{% url 'post_maker:profile' user.username %}">{{ first_letter|upper }}</a>
-            {% endwith %}
+                {% with user.username|slice:":1" as first_letter %}
+                <a class="profile nav-link" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu" href="{% url 'post_maker:profile' user.username %}">{{ first_letter|upper }}</a>
+                {% endwith %}
             {% endif %}
         </div>
     </div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="btn-menu">
-        <button class="btn btn-primary navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
-            <span class="navbar-toggler-icon"></span>
-            | | |
-        </button>
-    </div>
     <div class="collapse navbar-collapse d-none d-md-block text-center" id="navbarNav">
         <ul class="nav ml-auto mr-auto nav-pills">
             <div class="search-form text-center d-inline-block">
@@ -66,3 +60,13 @@
         </ul>
     </div>
 </nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const profile_link = document.querySelector('.profile');
+
+    profile_link.addEventListener('click', function () {
+        // Перемикаємо клас active при натисканні
+        profile_link.classList.toggle('active');
+    });
+});
+</script>
