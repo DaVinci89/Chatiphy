@@ -1,5 +1,4 @@
 {% load static %}
-{% block banner %}{% endblock %}
 <div class="header-line">
     <div class="header-logo">
         <h2 class="navbar-brand" style="color:#003366">CHATIPHY</h2>
@@ -20,13 +19,13 @@
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="btn-menu">
-    <button class="btn btn-primary navbar-toggler ms-auto d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+    <button class="btn btn-primary navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
         <span class="navbar-toggler-icon"></span>
         | | |
     </button>
     </div>
     <div class="collapse navbar-collapse justify-content-end d-none d-md-block" id="navbarNav"><br>
-        <ul class="nav ml-auto nav-pills">
+        <ul class="nav ml-auto mr-auto nav-pills">
             <div class="search-form text-center d-inline-block">
                 <form class="form-inline" action="/">
                     <input name="q" class="form-control form-control-lg mr-sm-2 d-inline-block" type="search" placeholder="Search" {% if keyword %} value="{{ keyword }}" {% endif %}>

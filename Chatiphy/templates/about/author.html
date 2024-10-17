@@ -3,24 +3,24 @@
 {% block title %}About author{% endblock %}
 {% block header %}<h2>About me</h2>{% endblock %}
 {% block content %}
-    <aside>
-        <img width="20%" height="5%" src="{% static 'img/author.jpg' %}" alt="author">
-    </aside>
-    <br>
-    <div class="container-fluid py-5 col-md-6 text-center">
+    <div class="container py-5 text-center">
         <article>
-        <p><b>Hello everyone!</b></p>
-        <i><p>My name is Igor Olkhin, and I am the pioneer and founder of Chatiphy, a social network for bloggers.</p>
-        <p> This project is the first of many ideas and is the beginning of my journey as a web developer. I am sure that this wonderful platform will find positive feedback in the hearts of users, and will definitely find its audience. The functionality will be constantly updated as I study new technologies and programming.</p>
-        <p>A few words about me.</p>
-        <p>I have a lot of experience in the field of programming, in particular the Python language, and I try to learn everything that comes my way. Probably, every programmer will understand this feeling when you create something from nothing. When a miracle is formed from a few obscure sets of symbols - whether it is an application, a web resource, or a console game of tic-tac-toe. This is what inspires me the most - creation.</p>
-        <p>Of course, without the support of people close to me, all my efforts would be in vain.</p>
-        <p>First of all, I would like to thank a wonderful girl and the love of my life - <b>Evgenia</b>.
-        Also, a special thank you to our cat <b>Basia</b>, who acted as an antidepressant and "rubber duck" for me.</p>
-            <p>Welcome to <strong>Chatiphy</strong>, and may your experience, like my work on the project, be interesting, useful and enjoyable.</p></i>
-    </article>
+            <div class="author-img">
+                <img width="20%" height="5%" src="{% static 'img/author.jpg' %}" alt="author">
+            </div>
+            <br>
+            <p><b>Hello everyone!</b></p>
+            <i><p>My name is Igor Olkhin, and I am the pioneer and founder of Chatiphy, a social network for bloggers.</p>
+            <p> This project is the first of many ideas and is the beginning of my journey as a web developer. I am sure that this wonderful platform will find positive feedback in the hearts of users, and will definitely find its audience. The functionality will be constantly updated as I study new technologies and programming.</p>
+            <p>A few words about me.</p>
+            <p>I have a lot of experience in the field of programming, in particular the Python language, and I try to learn everything that comes my way. Probably, every programmer will understand this feeling when you create something from nothing. When a miracle is formed from a few obscure sets of symbols - whether it is an application, a web resource, or a console game of tic-tac-toe. This is what inspires me the most - creation.</p>
+            <p>Of course, without the support of people close to me, all my efforts would be in vain.</p>
+            <p>First of all, I would like to thank a wonderful girl and the love of my life - <b>Evgenia</b>.
+            Also, a special thank you to our cat <b>Basia</b>, who acted as an antidepressant and "rubber duck" for me.</p>
+                <p>Welcome to <strong>Chatiphy</strong>, and may your experience, like my work on the project, be interesting, useful and enjoyable.</p></i>
+        </article>
     </div>
     <div class="container my-5 py-5 text-center">
-        <a class="page-link" href="https://cvdoc.ai/r/2860L9a4jg">My CV</a>
+        <a class="btn btn-primary" href="https://cvdoc.ai/r/2860L9a4jg">My CV</a>
     </div>
 {% endblock %}
