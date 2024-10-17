@@ -4,7 +4,7 @@
     }
     .header-line {
         display: flex;
-        justiphy-content: space-between;
+        justify-content: space-between;
         align-items: center;
         padding: 10px;
     }
@@ -27,9 +27,8 @@
         align-items: center;
     }
     .form-control {
-    width: 250px; /* Контролюємо ширину поля пошуку */
-}
-
+        width: 250px; /* Контролюємо ширину поля пошуку */
+    }
 }
 
 /* Завжди показуємо кнопку на менших екранах */
@@ -39,7 +38,7 @@
     }
     .header-line {
         display: flex;
-        justiphy-content: space-between;
+        justify-content: space-between;
         align-items: center;
         padding: 10px;
     }
@@ -63,5 +62,5 @@
     }
     .form-control {
     width: 250px; /* Контролюємо ширину поля пошуку */
-}
+    }
 }

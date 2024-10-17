@@ -7,7 +7,7 @@
 
         </aside>
         <hr>
-
+        <div class="post">
         <article class="card-body col-12 col-md-9 text-center">
             {% thumbnail post.image "500x500" crop=center upscale=True as img %}
             <img class="card-img my-2" src="{{ img.url }}">
@@ -22,13 +22,13 @@
                 {% endif %}
                 <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a>
             </div>
-            <hr>
             {% if request.user == post.author %}
             <div class="text-center">
                 <a class="btn btn-primary" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
             </div>
             {% endif %}
         </article>
+        </div>
         <br>
     </div>
 {% endblock %}

@@ -13,7 +13,7 @@
         </div>
         <div class="profile-link">
             {% if user.is_authenticated %}
-            <p class="ms-auto"><span class="">Profile: <a class="nav-link" href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a></span></p>
+            <a class="nav-link" href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a>
             {% endif %}
         </div>
     </div>
