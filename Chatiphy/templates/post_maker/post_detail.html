@@ -16,23 +16,22 @@
                 </li>
             </ul>
         </aside>
-        <br>
         <hr>
-        {% thumbnail post.image "200x200" crop=center upscale=True as img %}
-        <img class="card-img my-2" src="{{ img.url }}">
-        {% endthumbnail %}
-        <br>
-        <article class="col-12 col-md-9">
-            <p>{{ post.text }}</p>
+
+        <article class="card-body col-12 col-md-9 text-center">
+            {% thumbnail post.image "500x500" crop=center upscale=True as img %}
+            <img class="card-img my-2" src="{{ img.url }}">
+            {% endthumbnail %}
+            <br>
+            <p class="card-text">{{ post.text }}</p>
+            <br>
+            <hr>
+            {% if request.user == post.author %}
+            <div class="text-center">
+                <a class="btn btn-primary" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
+            </div>
+            {% endif %}
         </article>
-        <br>
-        <hr>
-        <br>
-        {% if request.user == post.author %}
-        <div class="text-center">
-            <a class="btn btn-primary" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
-        </div>
-        {% endif %}
         <br>
     </div>
 {% endblock %}

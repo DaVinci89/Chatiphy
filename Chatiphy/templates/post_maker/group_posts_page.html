@@ -11,6 +11,7 @@
             </li>
             <li>Date: {{post.pub_date|date:"d E Y"}}</li>
         </ul>
+
         <p>{{post.text}}</p>
         {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
