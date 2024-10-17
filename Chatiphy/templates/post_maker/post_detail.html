@@ -9,9 +9,11 @@
         <hr>
         <div class="post">
         <article class="card-body col-12 col-md-9 text-center">
+            <div class="post-img">
             {% thumbnail post.image "500x500" crop=center upscale=True as img %}
             <img class="card-img my-2" src="{{ img.url }}">
             {% endthumbnail %}
+            </div>
             <br>
             <p class="card-text">{{ post.text }}</p>
             <br>
