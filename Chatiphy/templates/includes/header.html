@@ -12,7 +12,9 @@
         </div>
         <div class="profile-link">
             {% if user.is_authenticated %}
-            <a class="nav-link profile-link" href="{% url 'post_maker:profile' user.username %}">{{ user.username }}</a>
+            {% with user.username|slice:":1" as first_letter %}
+            <a class="profile nav-link" href="{% url 'post_maker:profile' user.username %}">{{ first_letter|upper }}</a>
+            {% endwith %}
             {% endif %}
         </div>
     </div>
