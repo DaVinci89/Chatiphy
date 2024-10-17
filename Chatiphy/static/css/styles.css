@@ -92,17 +92,21 @@
         display: flex;
         justify-content: center;
     }
+    .search-form button {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
     .search-form-full {
         display: none;
     }
     .form-control {
-    width: 250px; /* Контролюємо ширину поля пошуку */
+        width: 250px; /* Контролюємо ширину поля пошуку */
     }
     .post-img img {
-    max-width: 100%; /* Зображення не буде ширшим за батьківський контейнер */
-    height: auto; /* Автоматичне масштабування по висоті */
-    display: block; /* Вирівнювання зображення по центру, усунення зайвих відступів */
-    margin-left: auto;
-    margin-right: auto;
-}
+        max-width: 100%; /* Зображення не буде ширшим за батьківський контейнер */
+        height: auto; /* Автоматичне масштабування по висоті */
+        display: block; /* Вирівнювання зображення по центру, усунення зайвих відступів */
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
