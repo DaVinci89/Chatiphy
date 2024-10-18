@@ -10,10 +10,10 @@
                 <button class="btn btn-primary" type="submit">Find</button>
             </form>
         </div>
-        <div class="profile-link">
+        <div class="profile-link active">
             {% if user.is_authenticated %}
                 {% with user.username|slice:":1" as first_letter %}
-                <a class="profile nav-link" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu" href="{% url 'post_maker:profile' user.username %}">{{ first_letter|upper }}</a>
+                <button id="profileButton" class="profile nav-link" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">{{ first_letter|upper }}</button>
                 {% endwith %}
             {% endif %}
         </div>
@@ -60,13 +60,15 @@
         </ul>
     </div>
 </nav>
+{% block scripts %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const profile_link = document.querySelector('.profile');
+document.addEventListener('DOMContentLoaded', function () {
+    const profileButton = document.getElementById('profileButton');
 
-    profile_link.addEventListener('click', function () {
-        // Перемикаємо клас active при натисканні
-        profile_link.classList.toggle('active');
+    profileButton.addEventListener('click', function () {
+        // Перемикання класу 'active' для збереження стану
+        profileButton.classList.toggle('active');
     });
 });
 </script>
+{% endblock %}

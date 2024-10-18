@@ -40,35 +40,25 @@ nav.navbar {
     align-items: center;
     margin-right: 12px;
     margin-left: 12px;
-    font-size: 20px; /* Розмір шрифту */
-    text-decoration: none; /* Прибираємо підкреслення у посилання */
+    font-size: 20px;
     font-weight: bold;
-    width: 40px; /* Ширина кружечка */
+    width: 40px;
     height: 40px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .profile:hover {
-    text-decoration: none;
     background-color: #FAFA00;
     color: #160085;
 }
 
-.profile:active {
-    text-decoration: none;
-    background-color: #FAFA00;;
-    color:  #160085;
-    transform: scale(0.98);
+.profile.active {
+    background-color: #160085; /* Зміна фону при натисканні */
+    color: white; /* Колір тексту в натиснутому стані */
+    transform: scale(0.98); /* Легкий ефект стиснення */
 }
-
-.profile:focus {
-    outline: none;
-    text-decoration: none;
-    background-color: #FAFA00;;
-    color:  #160085;
-    transform: scale(0.98);
-}
-
-
 
 .form-control {
     width: 250px; /* Контролюємо ширину поля пошуку */
@@ -108,11 +98,5 @@ nav.navbar {
 
     .search-form-full {
         display: none;
-    }
-    .profile:active {
-        text-decoration: none;
-        background-color: #FAFA00;;
-        color:  #160085;
-        transform: scale(0.98);
     }
 }
