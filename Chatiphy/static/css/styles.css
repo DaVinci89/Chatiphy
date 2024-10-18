@@ -96,6 +96,10 @@ ul.nav {
         display: flex;
         align-items: center;
     }
+
+    .hidenav {
+        display: none;
+    }
 }
 
 /* Завжди показуємо кнопку на менших екранах */

@@ -13,14 +13,14 @@
         <div class="profile-link active">
             {% if user.is_authenticated %}
                 {% with user.username|slice:":1" as first_letter %}
-                <button id="profileButton" class="profile nav-link" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">{{ first_letter|upper }}</button>
+                <button id="profileButton" class="navbar-toggler profile nav-link" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">{{ first_letter|upper }}</button>
                 {% endwith %}
             {% endif %}
         </div>
     </div>
 </div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="collapse navbar-collapse d-none d-md-block text-center" id="navbarNav">
+<nav id="navbar" class="navbar navbar-light bg-light hidenav">
+    <div class="collapse navbar-collapse text-center" id="navbarNav">
         <ul class="nav ml-auto mr-auto nav-pills">
             <div class="search-form text-center d-inline-block">
                 <form class="form-inline" action="/">
@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
     profileButton.addEventListener('click', function () {
         // Перемикання класу 'active' для збереження стану
         profileButton.classList.toggle('active');
+        var navMenu = document.getElementById("navbar");
+        navMenu.classList.toggle("hidenav");
     });
 });
 </script>
