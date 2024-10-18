@@ -46,8 +46,6 @@ ul.nav {
 }
 
 .profile {
-    background-color: #E7EB00;
-    color: white;
     border-radius: 360px;
     display: inline-flex;
     justify-content: center;
@@ -63,15 +61,31 @@ ul.nav {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.profile:hover {
+.profile.in {
+    background-color: #E7EB00;
+    color: white;
+}
+
+.profile.out {
+    background-image: url("../img/profile-anon.png");
+    background-size: cover; /* Зображення покриває весь елемент */
+    background-position: center; /* Зображення розміщене по центру */
+    background-repeat: no-repeat; /* Зображення не повторюється */
+}
+
+.profile.in:hover {
     background-color: #FAFA00;
     color: #160085;
 }
 
-.profile.active {
+.profile.active.in {
     background-color: #160085; /* Зміна фону при натисканні */
     color: white; /* Колір тексту в натиснутому стані */
     transform: scale(0.98); /* Легкий ефект стиснення */
+}
+
+.profile.active.out {
+    background-color: #160085; /* Зміна фону при натисканні */
 }
 
 .form-control {
