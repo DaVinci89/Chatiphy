@@ -70,3 +70,13 @@ class Comment(models.Model):
         upload_to="post_maker/img/comments",
         blank=True
     )
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["created",]
+        indexes = [
+            models.Index(fields=["created",])
+        ]
+
+    def __str__(self):
+        return f"Comment by {self.author} on {self.post}"

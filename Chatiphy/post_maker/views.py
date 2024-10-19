@@ -134,6 +134,8 @@ def edit_post(request, post_id):
 
 @login_required
 def add_comment(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    comment = None
     form = CreateCommentForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         comment = form.save(commit=False)
@@ -141,6 +143,12 @@ def add_comment(request, post_id):
         comment.post = request.post
         comments = Comment.objects.filter(post=comment.post)
         comment.save()
-    return redirect("post_maker:post_detail", pk=post_id)
+    context = {
+        "post":post,
+        "form":form,
+        "comment":comment,
+        "comments": comments,
+    }
+    return render(request,"post_maker/comment.html", context)
             
 
