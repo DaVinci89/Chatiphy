@@ -47,3 +47,26 @@ class Post(models.Model):
         verbose_name_plural = "Posts"
     def __str__(self):
         return self.text[:15]
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name="comments"
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="comments"
+    )
+    text = models.TextField(
+        help_text="Wright your comment",
+    )
+    created = models.DateTimeField(
+        auto_now_add=True,
+    )
+    image = models.ImageField(
+        "Comment Image",
+        upload_to="post_maker/img/comments",
+        blank=True
+    )

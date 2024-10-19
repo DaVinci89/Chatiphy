@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
-from .models import Post, Group
+from .models import Post, Group, Comment
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .forms import FeedbackForm, CreatePostForm
+from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
 
 
 def index(request):
@@ -131,5 +131,16 @@ def edit_post(request, post_id):
         form = CreatePostForm(instance=post)
     context = {"form":form, "is_edit":True, "post":post}
     return render(request, "post_maker/create_post.html", context)
+
+@login_required
+def add_comment(request, post_id):
+    form = CreateCommentForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = request.post
+        comments = Comment.objects.filter(post=comment.post)
+        comment.save()
+    return redirect("post_maker:post_detail", pk=post_id)
             
 

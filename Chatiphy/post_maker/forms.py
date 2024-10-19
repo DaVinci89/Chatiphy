@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Group
+from .models import Post, Comment
 from .validators import validate_not_empty
 
 
@@ -15,4 +15,12 @@ class CreatePostForm(forms.ModelForm):
         model = Post
         fields = ["text", "group", "image"]
         widgets = {"text": forms.Textarea(attrs={"placeholder":"Your message..."})}
+
+class CreateCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["text", "image"]
+        widgets = {
+            "text": forms.Textarea(attrs={"placeholder": "Your comment..."}),
+        }
         
