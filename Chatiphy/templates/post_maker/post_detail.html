@@ -2,9 +2,27 @@
 {% load thumbnail %}
 {% block title %}Post{% endblock %}
 {% block content %}
-    <div class="container row">
+    <div class="container col">
         <aside class="col-12 col-md-3">
-
+            {% with comments.count as total %}
+            <h3 id="comment-count">
+                {{ total }} comment{{ total|pluralize }}
+            </h3>
+            {% endwith %}
+            <div id="comments-list" class="comments">
+            {% for comment in comments %}
+            <div>
+                <p class="date">
+                    {{ comment.created }} | {{ comment.author }}
+                </p>
+                {{ comment.text }}
+            </div>
+                <br>
+            {% endfor %}
+            <br>
+            </div>
+            <br>
+            {% include "post_maker/includes/comment_form.html" %}
         </aside>
         <hr>
         <div class="post">
@@ -33,4 +51,51 @@
         </div>
         <br>
     </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Asynchronous form submission with AJAX
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('#comment-form');  // The form for comments
+        const commentList = document.querySelector('#comments-list');  // Where comments are shown
+        const commentCount = document.querySelector('#comment-count');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form from reloading the page
+            const formData = new FormData(form);  // Collect the form data
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',  // Ensures it's an AJAX request
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.comment) {
+                    // Add the new comment to the comments section
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comments');
+                    newComment.innerHTML = `
+                        <p class="date">${data.created} | ${data.author}</p>
+                        <p>${data.text}</p>
+                    `;
+
+                    // Append the new comment to the comments list
+                    // commentList.appendChild(newComment);
+                    commentList.append(newComment);
+                    // Clear the form after successful submission
+                    form.reset();
+                    let currentCount = parseInt(commentCount.textContent);  // Отримуємо поточний лічильник
+                    currentCount += 1;  // Додаємо 1
+                    commentCount.textContent = `${currentCount} comment${currentCount === 1 ? '' : 's'}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
 {% endblock %}

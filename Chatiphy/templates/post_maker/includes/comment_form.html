@@ -1,5 +1,5 @@
 <h4>Add new comment</h4>
-<form action="{% url 'post_maker:add_comment' post.pk %}" method="post">
+<form id="comment-form" action="{% url 'post_maker:add_comment' post.pk %}" method="post">
     {{ form.as_p}}
     {% csrf_token %}
     <p><input type="submit" value="Add comment"></p>

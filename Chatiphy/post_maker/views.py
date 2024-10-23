@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
-from .models import Post, Group, Comment
+from .models import Post, Group
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
+from django.http import JsonResponse
 
 
 def index(request):
@@ -101,7 +103,11 @@ def profile(request, username):
 def post_detail(request, post_id):
     template = "post_maker/post_detail.html"
     post = get_object_or_404(Post, pk=post_id)
-    context = {"post":post,}
+    comments = post.comments.filter(active=True)
+    form = CreateCommentForm()
+    context = {"post":post,
+               "comments":comments,
+               "form":form}
     return render(request, template, context)
     
 @login_required
@@ -133,22 +139,22 @@ def edit_post(request, post_id):
     return render(request, "post_maker/create_post.html", context)
 
 @login_required
+@require_POST
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    comment = None
     form = CreateCommentForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.author = request.user
-        comment.post = request.post
-        comments = Comment.objects.filter(post=comment.post)
+        comment.post = post
         comment.save()
-    context = {
-        "post":post,
-        "form":form,
-        "comment":comment,
-        "comments": comments,
-    }
-    return render(request,"post_maker/comment.html", context)
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                'comment': True,
+                'created': comment.created,
+                'author': comment.author.username,
+                'text': comment.text,
+            })
+    return redirect("post_maker/post_detail.html", post_id)
             
 
