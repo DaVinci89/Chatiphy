@@ -1,20 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>{{ group.title }}</h2>
+    <h2 class="block-header">{{ group.title }}</h2>
     <br>
     {{ group.description }}
     <br>
-    {% for post in page_obj %}
-        <ul>
-            <li>
-                Author: <a href="{% url 'post_maker:profile' post.author %}">{{post.author}}</a>
-            </li>
-            <li>Date: {{post.pub_date|date:"d E Y"}}</li>
-        </ul>
-
-        <p>{{post.text}}</p>
-        {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
+    {% include "post_maker/includes/post_list.html" %}
     <br>
     {% include 'post_maker/includes/paginator.html' %}
     <br>

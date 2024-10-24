@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}Profile: {{ username }}{% endblock %}
-{% block header %}<h1>All posts by author <i>{{ username }}</i></h1>{% endblock %}
+{% block header %}<h2 class="block-header">All posts by <i>{{ username }}</i></h2>{% endblock %}
 {% block content %}
-    <div class="container py-5">
+    <div>
         <h3>Posts count: {{ count }}</h3>
         <br>
         <hr>
         <br>
         {% if count > 0 %}
-        <article>
-            <h4>Last post</h4>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' latest.pk %}">Publish date: {{ latest.pub_date|date:"d E Y H:i:s" }}</a></li>
+        <h4>Last post</h4>
+        <div class="post-item post-list">
+            <div class="post-meta">
+                <span class="post-date">{{latest.pub_date|date:"d E Y"}}</span>
+                <span class="post-author">by <a href="{% url 'post_maker:profile' latest.author %}">{{ latest.author }}</a></span>
                 {% if latest.group %}
-                <li class="list-group-item">Group: <a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></li>
+                    <span class="post-group"><a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></span>
                 {% endif %}
-            </ul>
-            <p>{{ latest_text }}</p>
-        </article>
+            </div>
+            {% if post.title %}
+                <h2 class="post-title">{{ post.title }}</h2>
+            {% endif %}
+            <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
+            <a href="{% url 'post_maker:post_detail' latest.id %}" class="read-more">Read more</a>
+        </div>
         <br>
         <hr>
         {% else %}
@@ -25,15 +30,8 @@
         {% endif %}
         <br>
         {% if count > 1 %}
-        <h4>Other posts by {{ username }}</h4>
-        {% for post in page_obj %}
-            <ul class="list-group">
-                {% if post.pk != latest.pk %}
-                <li class="list-group-item"><a href="{% url 'post_maker:post_detail' post.pk %}">Publish Date: {{post.pub_date|date:"d E Y H:i:s"}}</a></li>
-                {% endif %}
-            </ul>
-            {% if not forloop.last %}<hr>{% endif %}
-        {% endfor %}
+        <h4>All posts by {{ username }}</h4>
+        {% include "post_maker/includes/post_list.html" %}
         {% endif %}
         <br>
         {% include 'post_maker/includes/paginator.html' %}

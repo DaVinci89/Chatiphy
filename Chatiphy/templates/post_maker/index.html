@@ -1,19 +1,7 @@
 {% extends "base.html" %}
-{% block header %}<h2>Last posts on site</h2>{% endblock %}
+{% block header %}<h2 class="block-header">Last posts on site</h2>{% endblock %}
 {% block content %}
-    <div class="container">
-        {% for post in page_obj %}
-            <ul>
-                <li>Author: <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></li>
-                <li>Date: {{post.pub_date|date:"d E Y"}}</li>
-                {% if post.group %}
-                    <li>Group: <a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group }}</a></li>
-                {% endif %}
-            </ul>
-            <p>{{post.text}}</p>
-            {% if not forloop.last %}<hr>{% endif %}
-        {% endfor %}
-    </div>
+    {% include "post_maker/includes/post_list.html" %}
     <br>
     {% include 'post_maker/includes/paginator.html' %}
     <br>

@@ -20,10 +20,8 @@ def index(request):
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    show_toast = request.session.pop('show_toast', False)
     context = {
         "page_obj": page_obj,
-        "show_toast":show_toast,
     }
     return render(request, template, context)
 
