@@ -146,13 +146,6 @@ def add_comment(request, post_id):
         comment.author = request.user
         comment.post = post
         comment.save()
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({
-                'comment': True,
-                'created': comment.created,
-                'author': comment.author.username,
-                'text': comment.text,
-            })
-    return redirect("post_maker/post_detail.html", post_id)
+    return redirect("post_maker:post_detail", post_id)
             
 

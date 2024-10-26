@@ -19,8 +19,8 @@ class CreatePostForm(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ["text", "image"]
+        fields = ["text",]
         widgets = {
-            "text": forms.Textarea(attrs={"placeholder": "Your comment..."}),
+            "text": forms.Textarea(attrs={"name":"comment", "id":"comment","placeholder":"Wright your comment here...", "required":"True"}),
         }
         

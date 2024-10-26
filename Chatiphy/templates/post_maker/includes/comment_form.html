@@ -2,5 +2,5 @@
 <form id="comment-form" action="{% url 'post_maker:add_comment' post.pk %}" method="post">
     {{ form.as_p}}
     {% csrf_token %}
-    <p><input type="submit" value="Add comment"></p>
+    <p><button type="submit">Add comment</button></p>
 </form>

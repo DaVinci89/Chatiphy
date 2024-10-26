@@ -60,7 +60,6 @@ class Comment(models.Model):
         related_name="comments"
     )
     text = models.TextField(
-        help_text="Wright your comment",
     )
     created = models.DateTimeField(
         auto_now_add=True,

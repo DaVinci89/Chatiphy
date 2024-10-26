@@ -1,0 +1,14 @@
+<div id="comments-list" class="comments-list">
+    <h3>Comments (<span id="comment-count">{{ comments.count }}</span>)</h3>
+    {% for comment in comments %}
+        <div class="comment-item">
+            <div class="comment-meta">
+                <span class="comment-author">{{ comment.author }}</span>
+                <span class="comment-date">{{ comment.created|date:"d M Y H:i" }}</span>
+            </div>
+            <p class="comment-text">{{ comment.text }}</p>
+        </div>
+    {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
