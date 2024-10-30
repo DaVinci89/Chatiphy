@@ -14,7 +14,7 @@
     margin: 0 auto;
 }
 
-.post-item {
+.post-list-item {
     background-color: #f9f9f9;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -23,27 +23,27 @@
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.post-item:hover {
+.post-list-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.post-meta {
+.post-list-meta {
     font-size: 1.1rem;
     color: #777;
     margin-bottom: 10px;
 }
 
-.post-date {
+.post-list-date {
     margin-right: 10px;
 }
 
-.post-author {
+.post-list-author {
     font-weight: bold;
     margin-right: 10px;
 }
 
-.post-group {
+.post-list-group {
     font-weight: bold;
 }
 
@@ -69,4 +69,130 @@
     background-color: #0056b3;
     color: #fff;
     text-decoration: none;
+}
+
+
+.post-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+    background-color: #f4f4f9; /* Світлий фон */
+    min-height: 80vh; /* Висота екрану */
+}
+
+.post-item {
+    background-color: white; /* Білий фон */
+    border-radius: 10px; /* Згладжені кути */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тінь для об'єму */
+    padding: 40px; /* Відступи */
+    max-width: 800px; /* Максимальна ширина посту */
+    width: 100%; /* Повна ширина для адаптивності */
+    transition: box-shadow 0.3s ease; /* Анімація */
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between; /* Дата зліва, автор справа */
+    font-size: 1.2rem; /* Розмір шрифту для метаданих */
+    color: #888; /* Світлий колір */
+    margin-bottom: 15px; /* Відступ від заголовка */
+}
+
+.post-date {
+    font-weight: bold; /* Жирний текст */
+    text-transform: uppercase; /* Великі літери */
+}
+
+.post-author {
+    font-style: italic; /* Курсив */
+    font-weight: bold;
+}
+
+.post-group {
+    font-weight: bold;
+}
+
+.post-title {
+    font-size: 2.5rem; /* Великий заголовок */
+    color: #333; /* Темний колір */
+    margin-bottom: 25px; /* Відступ від контенту */
+    text-align: center; /* Центрування */
+    text-transform: capitalize; /* Великі літери */
+}
+
+.post-image img {
+    width: 100%; /* Повна ширина */
+    height: auto; /* Пропорційне масштабування */
+    border-radius: 8px; /* Згладжені кути */
+    margin-bottom: 30px; /* Відступ від тексту */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тінь */
+}
+
+.post-content p {
+    font-size: 1.4rem; /* Основний текст */
+    line-height: 1.8; /* Міжрядковий інтервал */
+    color: #444; /* Темно-сірий текст */
+    text-align: justify; /* Вирівнювання */
+    margin-bottom: 20px; /* Відступ між абзацами */
+}
+
+.post-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px; /* Відступ зверху */
+}
+
+.edit-button {
+    padding: 10px 20px; /* Відступи всередині */
+    font-size: 1rem; /* Розмір тексту кнопки */
+    font-weight: bold; /* Жирний текст */
+    color: white; /* Білий текст */
+    background-color: #007bff; /* Синій фон */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Згладжені кути */
+    text-decoration: none; /* Прибираємо підкреслення */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тінь */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Анімація кольору і тіні */
+}
+
+.edit-button:hover {
+    background-color: #0056b3; /* Темніший синій при наведенні */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Посилена тінь */
+    text-decoration: none;
+    color: white;
+}
+
+.edit-button:active {
+    background-color: #003d80; /* Темніший колір при натисканні */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Менша тінь */
+    transform: translateY(2px); /* Легкий рух вниз */
+}
+
+.edit-button:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.edit-button:focus {
+    text-decoration: none;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .post-item {
+        padding: 20px; /* Менші відступи */
+    }
+
+    .post-title {
+        font-size: 2rem; /* Зменшення розміру заголовка */
+    }
+
+    .post-content p {
+        font-size: 1rem; /* Зменшення розміру тексту */
+    }
+
+    .edit-button {
+        width: 100%; /* Кнопка на всю ширину */
+        text-align: center;
+    }
 }

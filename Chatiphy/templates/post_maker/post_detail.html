@@ -2,37 +2,36 @@
 {% load thumbnail %}
 {% block title %}Post{% endblock %}
 {% block content %}
-        <div class="post">
-        <article class="card-body text-center">
-            <div class="post-img">
-            {% thumbnail post.image "500x500" crop=center upscale=True as img %}
-            <img class="card-img my-2" src="{{ img.url }}">
-            {% endthumbnail %}
-            </div>
-            <br>
-            <p class="card-text">{{ post.text }}</p>
-            <br>
-            <div class="d-flex justify-content-between me-5">
-                <span>{{ post.pub_date|date:"d E Y H:i:s" }}</span>
+    <div class="post-container">
+        <div class="post-item">
+            <div class="post-meta">
+                <span class="post-date">{{ post.pub_date|date:"d E Y H:i:s" }}</span>
+                <span class="post-author">by <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></span>
                 {% if post.group %}
-                    <a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group.title }}</a>
+                    <span class="post-group"><a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group.title }}</a></span>
                 {% endif %}
-                <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a>
             </div>
-            {% if request.user == post.author %}
-            <div class="text-center">
-                <a class="btn btn-primary" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
+            {% if post.title %}
+                <h2 class="post-title">{{ post.title }}</h2>
+            {% endif %}
+            {% if post.image %}
+            <div class="post-image">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
             </div>
             {% endif %}
-        </article>
+            <div class="post-content">
+                <p>{{ post.text }}</p>
+            </div>
+            {% if request.user == post.author %}
+                <div class="post-actions">
+                    <a class="edit-button" href="{% url 'post_maker:edit_post' post.pk %}">Edit</a>
+                </div>
+            {% endif %}
         </div>
-        <br>
-
+    </div>
     <div class="comments-section">
         {% include 'post_maker/includes/comment_form.html' %}
         {% include 'post_maker/includes/comments_list.html' %}
     </div>
 {% endblock %}
-{% block scripts %}
-
-{% endblock %}
+{% block scripts %}{% endblock %}

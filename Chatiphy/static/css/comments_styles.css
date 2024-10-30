@@ -1,0 +1,102 @@
+.comments-section {
+    max-width: 800px;
+    margin: 40px auto; /* Центрування і відступ зверху */
+    padding: 20px;
+    background-color: #f9f9f9; /* Світло-сірий фон */
+    border-radius: 10px; /* Згладжені кути */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
+}
+
+.comments-section h3 {
+    font-size: 1.8rem; /* Більший заголовок */
+    color: #333; /* Темний колір */
+    margin-bottom: 20px; /* Відступ між заголовком і рештою */
+}
+
+#comment-form {
+    margin-bottom: 40px; /* Відступ між формою і списком коментарів */
+}
+
+#comment-form textarea {
+    width: 100%; /* Ширина текстового поля займає всю ширину контейнера */
+    max-height: 10%;
+    padding: 15px; /* Внутрішній відступ */
+    font-size: 1.1rem; /* Більший розмір шрифту для тексту */
+    border: 1px solid #ddd; /* Світла рамка */
+    border-radius: 10px; /* Згладжені кути */
+    resize: none; /* Дозволяємо вертикальне змінення розміру поля */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* Внутрішня тінь для об'єму */
+    margin-bottom: 15px; /* Відступ між текстовим полем і кнопкою */
+}
+
+#comment-form textarea:focus {
+    outline: none; /* Прибираємо стандартну рамку фокусу */
+    border-color: #007bff; /* Синя рамка при фокусі */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Синя тінь при фокусі */
+}
+
+#comment-form button {
+    padding: 12px 20px; /* Відступи всередині кнопки */
+    font-size: 1.1rem; /* Більший розмір шрифту */
+    font-weight: bold;
+    background-color: #007bff; /* Синій фон */
+    color: white; /* Білий текст */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Згладжені кути */
+    cursor: pointer; /* Іконка руки для кнопки */
+    transition: background-color 0.3s ease; /* Анімація зміни фону */
+}
+
+#comment-form button:hover {
+    background-color: #0056b3; /* Темніший синій при наведенні */
+}
+
+.comments-list {
+    margin-top: 40px; /* Відступ зверху */
+}
+
+.comment-item {
+    background-color: white; /* Білий фон для кожного коментаря */
+    padding: 15px; /* Відступи всередині коментаря */
+    border-radius: 10px; /* Згладжені кути */
+    border: 1px solid #e0e0e0; /* Світла рамка */
+    margin-bottom: 20px; /* Відступ між коментарями */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Легка тінь */
+}
+
+.comment-meta {
+    display: flex;
+    justify-content: space-between; /* Розміщення автора зліва, дати справа */
+    margin-bottom: 10px; /* Відступ між метаданими і текстом коментаря */
+    font-size: 1.1rem; /* Трохи менший шрифт для метаданих */
+    color: #777; /* Світліший колір для вторинної інформації */
+}
+
+.comment-author {
+    font-weight: bold; /* Жирний текст для автора */
+}
+
+.comment-date {
+    font-style: italic; /* Курсив для дати публікації */
+}
+
+.comment-text {
+    font-size: 1.4rem; /* Стандартний розмір тексту */
+    line-height: 1.6; /* Збільшений міжрядковий інтервал */
+    color: #333; /* Темний текст */
+}
+
+@media (max-width: 768px) {
+    .comments-section {
+        padding: 15px;
+    }
+
+    #comment-form button {
+        width: 100%; /* Кнопка займатиме всю ширину на мобільних */
+    }
+
+    .comment-meta {
+        flex-direction: column; /* Вертикальне розміщення метаданих на мобільних */
+        align-items: flex-start; /* Вирівнювання по лівому краю */
+    }
+}

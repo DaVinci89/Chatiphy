@@ -1,15 +1,15 @@
 <div class="post-list">
     {% for post in page_obj %}
-        <div class="post-item">
-            <div class="post-meta">
-                <span class="post-date">{{post.pub_date|date:"d E Y"}}</span>
-                <span class="post-author">by <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></span>
+        <div class="post-list-item">
+            <div class="post-list-meta">
+                <span class="post-list-date">{{post.pub_date|date:"d E Y"}}</span>
+                <span class="post-list-author">by <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></span>
                 {% if post.group %}
-                    <span class="post-group"><a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group }}</a></span>
+                    <span class="post-list-group"><a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group }}</a></span>
                 {% endif %}
             </div>
             {% if post.title %}
-                <h2 class="post-title">{{ post.title }}</h2>
+                <h2 class="post-list-title">{{ post.title }}</h2>
             {% endif %}
             <p class="post-excerpt">{{ post.text|slice:":30" }}...</p>
             <a href="{% url 'post_maker:post_detail' post.id %}" class="read-more">Read more</a>

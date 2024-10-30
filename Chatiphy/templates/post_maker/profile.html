@@ -9,16 +9,16 @@
         <br>
         {% if count > 0 %}
         <h4>Last post</h4>
-        <div class="post-item post-list">
-            <div class="post-meta">
-                <span class="post-date">{{latest.pub_date|date:"d E Y"}}</span>
-                <span class="post-author">by <a href="{% url 'post_maker:profile' latest.author %}">{{ latest.author }}</a></span>
+        <div class="post-list-item post-list">
+            <div class="post-list-meta">
+                <span class="post-list-date">{{latest.pub_date|date:"d E Y"}}</span>
+                <span class="post-list-author">by <a href="{% url 'post_maker:profile' latest.author %}">{{ latest.author }}</a></span>
                 {% if latest.group %}
-                    <span class="post-group"><a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></span>
+                    <span class="post-list-group"><a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></span>
                 {% endif %}
             </div>
             {% if post.title %}
-                <h2 class="post-title">{{ post.title }}</h2>
+                <h2 class="post-list-title">{{ post.title }}</h2>
             {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
             <a href="{% url 'post_maker:post_detail' latest.id %}" class="read-more">Read more</a>
