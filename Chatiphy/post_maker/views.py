@@ -1,27 +1,34 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
-from .models import Post, Group
+from .models import Post, Group, Follow
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
-from django.http import JsonResponse
 
 
+@login_required
 def index(request):
+    filter_option = request.GET.get("filter", "all")
     keyword = request.GET.get("q", None)
+    if filter_option == "followed":
+        followed_authors = Follow.objects.filter(user=request.user).values_list("author", flat=True)
+        posts = Post.objects.filter(author__in=followed_authors)
+        show_followed = True
+    elif filter_option == "all":
+        posts = Post.objects.all().order_by("-pub_date")
+        show_followed = False
     if keyword:
         posts = Post.objects.filter(text__contains=keyword).select_related("author").order_by("-pub_date")
-    else:
-        posts = Post.objects.order_by("-pub_date")
     template = "post_maker/index.html"
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
         "page_obj": page_obj,
+        "show_followed":show_followed
     }
     return render(request, template, context)
 
@@ -94,7 +101,8 @@ def profile(request, username):
                "count":count,
                "page_obj":page_obj,
                "latest":latest,
-               "latest_text":latest_text}
+               "latest_text":latest_text,
+               "user":user}
     return render(request, template, context)
 
 @login_required
@@ -147,5 +155,19 @@ def add_comment(request, post_id):
         comment.post = post
         comment.save()
     return redirect("post_maker:post_detail", post_id)
-            
 
+@login_required
+def subscribe(request, username):
+    author = get_object_or_404(User, username=username)
+    if request.user != author:
+        Follow.objects.get_or_create(user=request.user, author=author)
+        request.user.follow = True
+    return redirect("post_maker:profile", username=author.username)
+
+@login_required
+def unsubscribe(request, username):
+    author = get_object_or_404(User, username=username)
+    if request.user != author:
+        Follow.objects.filter(user=request.user, author=author).delete()
+        request.user.follow = False
+    return redirect("post_maker:profile", username=author.username)

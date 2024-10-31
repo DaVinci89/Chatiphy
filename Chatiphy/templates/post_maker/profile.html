@@ -3,6 +3,19 @@
 {% block header %}<h2 class="block-header">All posts by <i>{{ username }}</i></h2>{% endblock %}
 {% block content %}
     <div>
+        {% if request.user != author %}
+            {% if request.user.follow %}
+                <form action="{% url 'post_maker:unsubscribe' user.username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Unfollow</button>
+                </form>
+            {% else %}
+                <form action="{% url 'post_maker:unsubscribe' user.username %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Follow</button>
+                </form>
+            {% endif %}
+        {% endif %}
         <h3>Posts count: {{ count }}</h3>
         <br>
         <hr>
