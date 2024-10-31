@@ -19,19 +19,23 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 0;
+    height: 100%; /* Висота, яка відповідає висоті хедера */
+    box-sizing: border-box;
 }
 
 .header-logo {
     flex-shrink: 0; /* Зберігає початковий розмір логотипу */
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .header-logo-img {
-    height: 80px; /* Задайте бажану висоту логотипу */
+    height: 102px; /* Задайте бажану висоту логотипу */
     width: auto; /* Пропорційне масштабування */
     max-width: 150px; /* Максимальна ширина для контролю розміру */
+    max-height: 102px; /* Максимальна висота логотипу */
     cursor: pointer;
     padding: 0;
 }
@@ -143,6 +147,6 @@ ul.nav {
     }
 
     .header-logo-img {
-        height: 60px; /* Задайте бажану висоту логотипу */
+        height: 80px; /* Задайте бажану висоту логотипу */
     }
 }
