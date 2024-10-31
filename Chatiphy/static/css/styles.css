@@ -143,10 +143,10 @@ ul.nav {
     }
 
     header {
-        max-height: 80px;
+        max-height: 100px;
     }
 
     .header-logo-img {
-        height: 80px; /* Задайте бажану висоту логотипу */
+        height: 100px; /* Задайте бажану висоту логотипу */
     }
 }
