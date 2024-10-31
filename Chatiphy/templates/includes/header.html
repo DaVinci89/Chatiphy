@@ -1,7 +1,9 @@
 {% load static %}
 <div class="header-line">
     <div class="header-logo">
-        <h2 class="navbar-brand" style="color:#003366">CHATIPHY</h2>
+        <a href="{% url 'post_maker:index' %}">
+            <img src="{% static 'img/header_logo.png' %}" class="header-logo-img" alt="CHATIPHY">
+        </a>
     </div>
     <div class="nav-panel">
         <div class="search-form-full">

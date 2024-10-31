@@ -22,6 +22,20 @@ main {
     padding: 10px;
 }
 
+.header-logo {
+    flex-shrink: 0; /* Зберігає початковий розмір логотипу */
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-img {
+    height: 80px; /* Задайте бажану висоту логотипу */
+    width: auto; /* Пропорційне масштабування */
+    max-width: 150px; /* Максимальна ширина для контролю розміру */
+    cursor: pointer;
+    padding: 0;
+}
+
 .nav-panel {
     display: flex;
     align-items: center;
@@ -92,14 +106,6 @@ ul.nav {
     width: 250px; /* Контролюємо ширину поля пошуку */
 }
 
-.post-img img {
-    max-width: 100%; /* Зображення не буде ширшим за батьківський контейнер */
-    height: auto; /* Автоматичне масштабування по висоті */
-    display: block; /* Вирівнювання зображення по центру, усунення зайвих відступів */
-    margin-left: auto;
-    margin-right: auto;
-}
-
 @media (min-width: 480px) {
 
     .search-form {
@@ -130,5 +136,13 @@ ul.nav {
 
     .search-form-full {
         display: none;
+    }
+
+    header {
+        max-height: 80px;
+    }
+
+    .header-logo-img {
+        height: 60px; /* Задайте бажану висоту логотипу */
     }
 }
