@@ -80,26 +80,26 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.author} on {self.post}"
 
-class Follow(models.Model):
-    user = models.ForeignKey(
+class Subscription(models.Model):
+    subscriber = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="follower"
+        related_name="subscriptions"
     )
-    author = models.ForeignKey(
+    sub_author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following"
+        related_name="subscribers"
     )
 
     class Meta:
-        unique_together = ("user", "author")
+        unique_together = ("subscriber", "sub_author")
         constraints = [
             models.CheckConstraint(
-                check=models.Q(user=models.F("author")),
+                check=~models.Q(subscriber=models.F("sub_author")),
                 name="prevent_self_subscription"
             )
         ]
 
     def __str__(self):
-        return f"{self.user.username} followed {self.author.username}"
+        return f"{self.subscriber.username} followed {self.sub_author.username}"

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
-from .models import Post, Group, Follow
+from .models import Post, Group, Subscription
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
@@ -14,7 +14,7 @@ def index(request):
     filter_option = request.GET.get("filter", "all")
     keyword = request.GET.get("q", None)
     if filter_option == "followed":
-        followed_authors = Follow.objects.filter(user=request.user).values_list("author", flat=True)
+        followed_authors = Subscription.objects.filter(subscriber=request.user).values_list("sub_author", flat=True)
         posts = Post.objects.filter(author__in=followed_authors)
         show_followed = True
     elif filter_option == "all":
@@ -96,13 +96,15 @@ def profile(request, username):
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    subscriptions = Subscription.objects.filter(subscriber=request.user).values_list('sub_author', flat=True)
 
     context = {"username":username,
                "count":count,
                "page_obj":page_obj,
                "latest":latest,
                "latest_text":latest_text,
-               "user":user}
+               "user":user,
+               'is_subscribed': user.id in subscriptions,}
     return render(request, template, context)
 
 @login_required
@@ -157,17 +159,17 @@ def add_comment(request, post_id):
     return redirect("post_maker:post_detail", post_id)
 
 @login_required
-def subscribe(request, username):
-    author = get_object_or_404(User, username=username)
-    if request.user != author:
-        Follow.objects.get_or_create(user=request.user, author=author)
+def subscribe(request, author_id):
+    sub_author = get_object_or_404(User, id=author_id)
+    if request.user != sub_author:
+        Subscription.objects.get_or_create(subscriber=request.user, sub_author=sub_author)
         request.user.follow = True
-    return redirect("post_maker:profile", username=author.username)
+    return redirect("post_maker:profile", username=sub_author.username)
 
 @login_required
-def unsubscribe(request, username):
-    author = get_object_or_404(User, username=username)
-    if request.user != author:
-        Follow.objects.filter(user=request.user, author=author).delete()
+def unsubscribe(request, author_id):
+    sub_author = get_object_or_404(User, id=author_id)
+    if request.user != sub_author:
+        Subscription.objects.filter(subscriber=request.user, sub_author=sub_author).delete()
         request.user.follow = False
-    return redirect("post_maker:profile", username=author.username)
+    return redirect("post_maker:profile", username=sub_author.username)
