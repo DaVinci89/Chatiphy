@@ -5,12 +5,12 @@
     <div>
         {% if request.user.username != username %}
             {% if is_subscribed %}
-                <form action="{% url 'post_maker:unsubscribe' user.username %}" method="post">
+                <form action="{% url 'post_maker:unsubscribe' username %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Unfollow</button>
                 </form>
             {% else %}
-                <form action="{% url 'post_maker:unsubscribe' user.username %}" method="post">
+                <form action="{% url 'post_maker:subscribe' username %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Follow</button>
                 </form>

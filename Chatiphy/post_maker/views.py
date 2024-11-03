@@ -159,17 +159,17 @@ def add_comment(request, post_id):
     return redirect("post_maker:post_detail", post_id)
 
 @login_required
-def subscribe(request, author_id):
-    sub_author = get_object_or_404(User, id=author_id)
+def subscribe(request, username):
+    sub_author = get_object_or_404(User, username=username)
     if request.user != sub_author:
         Subscription.objects.get_or_create(subscriber=request.user, sub_author=sub_author)
         request.user.follow = True
-    return redirect("post_maker:profile", username=sub_author.username)
+    return redirect("post_maker:profile", username)
 
 @login_required
-def unsubscribe(request, author_id):
-    sub_author = get_object_or_404(User, id=author_id)
+def unsubscribe(request, username):
+    sub_author = get_object_or_404(User, username=username)
     if request.user != sub_author:
         Subscription.objects.filter(subscriber=request.user, sub_author=sub_author).delete()
         request.user.follow = False
-    return redirect("post_maker:profile", username=sub_author.username)
+    return redirect("post_maker:profile", username)
