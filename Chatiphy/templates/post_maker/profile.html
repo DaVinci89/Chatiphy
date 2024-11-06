@@ -34,7 +34,7 @@
                 <h2 class="post-list-title">{{ post.title }}</h2>
             {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
-            <a href="{% url 'post_maker:post_detail' latest.id %}" class="read-more">Read more</a>
+            <a href="{% url 'post_maker:post_detail' latest.slug %}" class="read-more">Read more</a>
         </div>
         <br>
         <hr>

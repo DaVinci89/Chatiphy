@@ -17,7 +17,7 @@
                 </div>
             {% endif %}
             <p class="post-excerpt">{{ post.text|slice:":30" }}...</p>
-            <a href="{% url 'post_maker:post_detail' post.id %}" class="read-more">Read more</a>
+            <a href="{% url 'post_maker:post_detail' post.slug %}" class="read-more">Read more</a>
         </div>
     {% endfor %}
 </div>

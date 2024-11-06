@@ -108,9 +108,9 @@ def profile(request, username):
     return render(request, template, context)
 
 @login_required
-def post_detail(request, post_id):
+def post_detail(request, slug):
     template = "post_maker/post_detail.html"
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(active=True)
     form = CreateCommentForm()
     context = {"post":post,
