@@ -14,11 +14,21 @@ class Group(models.Model):
 
 
 class Post(models.Model):
+    title = models.CharField(
+        max_length=250,
+        default=''
+    )
     text = models.TextField(
         help_text="Enter the text of post"
     )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
     pub_date = models.DateTimeField(
         auto_now_add=True,
+    )
+    updated = models.DateTimeField(
+        auto_now=True
     )
     author = models.ForeignKey(
         User,
@@ -43,6 +53,9 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('-pub_date',)
+        indexes = [
+            models.Index(fields=['-pub_date'])
+        ]
         verbose_name = "Post"
         verbose_name_plural = "Posts"
     def __str__(self):
