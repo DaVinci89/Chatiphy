@@ -21,6 +21,11 @@ class Post(models.Model):
     text = models.TextField(
         help_text="Enter the text of post"
     )
+    slug = models.SlugField(
+        max_length=200,
+        unique=True,
+        blank=True
+    )
     created = models.DateTimeField(
         auto_now_add=True
     )

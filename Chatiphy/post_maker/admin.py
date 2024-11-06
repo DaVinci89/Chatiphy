@@ -12,6 +12,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ("text", "author", "group")
     # List of fields for filtering
     list_filter = ("pub_date", "author")
+    prepopulated_fields = {"slug": ("title",)}
     raw_id_fields = ["author"]
     # Navigation through dates
     date_hierarchy = "pub_date"
