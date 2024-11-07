@@ -13,7 +13,7 @@
             </form>
         </div>
         <div class="profile-link active">
-                {% with user.username|slice:":1" as first_letter %}
+                {% with request.user.username|slice:":1" as first_letter %}
                 <button id="profileButton" class="navbar-toggler profile nav-link {% if user.is_authenticated %}in{% else %}out{% endif %}" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">{{ first_letter|upper }}</button>
                 {% endwith %}
         </div>

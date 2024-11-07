@@ -156,7 +156,7 @@ def add_comment(request, post_id):
         comment.author = request.user
         comment.post = post
         comment.save()
-    return redirect("post_maker:post_detail", post_id)
+    return redirect("post_maker:post_detail", post_id=post_id, slug=post.slug)
 
 @login_required
 def subscribe(request, username):
