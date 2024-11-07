@@ -30,11 +30,11 @@
                     <span class="post-list-group"><a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></span>
                 {% endif %}
             </div>
-            {% if post.title %}
-                <h2 class="post-list-title">{{ post.title }}</h2>
+            {% if latest.title %}
+                <h2 class="post-list-title">{{ latest.title }}</h2>
             {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
-            <a href="{% url 'post_maker:post_detail' latest.slug %}" class="read-more">Read more</a>
+            <a href="{% url 'post_maker:post_detail' latest.id latest.slug %}" class="read-more">Read more</a>
         </div>
         <br>
         <hr>

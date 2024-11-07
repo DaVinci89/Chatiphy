@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 User = get_user_model()
 
@@ -23,7 +24,6 @@ class Post(models.Model):
     )
     slug = models.SlugField(
         max_length=200,
-        unique=True,
         blank=True
     )
     created = models.DateTimeField(
@@ -65,6 +65,11 @@ class Post(models.Model):
         verbose_name_plural = "Posts"
     def __str__(self):
         return self.text[:15]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(

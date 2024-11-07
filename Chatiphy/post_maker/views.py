@@ -108,9 +108,9 @@ def profile(request, username):
     return render(request, template, context)
 
 @login_required
-def post_detail(request, slug):
+def post_detail(request, post_id, slug):
     template = "post_maker/post_detail.html"
-    post = get_object_or_404(Post, slug=slug)
+    post = get_object_or_404(Post, pk=post_id, slug=slug)
     comments = post.comments.filter(active=True)
     form = CreateCommentForm()
     context = {"post":post,
@@ -132,15 +132,15 @@ def create_post(request):
     return render(request, "post_maker/create_post.html", {"form":form})
     
 @login_required
-def edit_post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def edit_post(request, post_id, slug):
+    post = get_object_or_404(Post, pk=post_id, slug=slug)
     if request.user != post.author:
-        return redirect("post_maker:post_detail", post_id=post.pk)
+        return redirect("post_maker:post_detail", pk=post.id, slug=slug)
     if request.method == "POST":
         form = CreatePostForm(request.POST, files=request.FILES or None, instance=post)
         if form.is_valid():
             form.save()
-            return redirect("post_maker:post_detail", post_id=post.pk)
+            return redirect("post_maker:post_detail", pk=post_id, slug=slug)
     else:
         form = CreatePostForm(instance=post)
     context = {"form":form, "is_edit":True, "post":post}
