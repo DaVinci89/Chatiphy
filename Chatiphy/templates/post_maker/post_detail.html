@@ -24,7 +24,7 @@
             </div>
             {% if request.user == post.author %}
                 <div class="post-actions">
-                    <a class="edit-button" href="{% url 'post_maker:edit_post' post.pk post.slug %}">Edit</a>
+                    <a class="edit-button" href="{% url 'post_maker:edit_post' post.id post.slug %}">Edit</a>
                 </div>
             {% endif %}
         </div>

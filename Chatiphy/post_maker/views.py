@@ -135,12 +135,12 @@ def create_post(request):
 def edit_post(request, post_id, slug):
     post = get_object_or_404(Post, pk=post_id, slug=slug)
     if request.user != post.author:
-        return redirect("post_maker:post_detail", pk=post.id, slug=slug)
+        return redirect("post_maker:post_detail", post_id=post.id, slug=post.slug)
     if request.method == "POST":
         form = CreatePostForm(request.POST, files=request.FILES or None, instance=post)
         if form.is_valid():
             form.save()
-            return redirect("post_maker:post_detail", pk=post_id, slug=slug)
+            return redirect("post_maker:post_detail", post_id=post.id, slug=post.slug)
     else:
         form = CreatePostForm(instance=post)
     context = {"form":form, "is_edit":True, "post":post}
