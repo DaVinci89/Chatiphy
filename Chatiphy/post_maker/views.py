@@ -23,9 +23,7 @@ def index(request):
     if keyword:
         posts = Post.objects.filter(text__contains=keyword).select_related("author").order_by("-pub_date")
     template = "post_maker/index.html"
-    paginator = Paginator(posts, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(request, posts, 5)
     context = {
         "page_obj": page_obj,
         "show_followed":show_followed
@@ -38,9 +36,7 @@ def group_posts(request):
     text = "<h2><b>Groups</b><h2>"
     groups = Group.objects.all()
     groups_count = Group.objects.count()
-    paginator = Paginator(groups, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(request, groups, 5)
     context = {
         "header": text,
         "page_obj":page_obj,
@@ -53,9 +49,7 @@ def group_posts_page(request, page):
     template = "post_maker/group_posts_page.html"
     group = get_object_or_404(Group, slug=page)
     posts = Post.objects.filter(group=group).order_by("-pub_date")
-    paginator = Paginator(posts, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(request, posts, 5)
     context = {
         "group": group,
         "page_obj":page_obj,
@@ -93,9 +87,7 @@ def profile(request, username):
     latest = posts.latest("pub_date")
     latest_text = latest.text
     count = posts.count()
-    paginator = Paginator(posts, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(request, posts, 5)
     subscriptions = Subscription.objects.filter(subscriber=request.user).values_list('sub_author', flat=True)
 
     context = {"username":username,
@@ -173,3 +165,8 @@ def unsubscribe(request, username):
         Subscription.objects.filter(subscriber=request.user, sub_author=sub_author).delete()
         request.user.follow = False
     return redirect("post_maker:profile", username)
+@login_required
+def paginator(request, posts, pages):
+    paginator_obj = Paginator(posts, pages)
+    page_number = request.GET.get('page')
+    return paginator_obj.get_page(page_number)
