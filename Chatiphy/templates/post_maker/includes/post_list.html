@@ -17,6 +17,9 @@
                 </div>
             {% endif %}
             <p class="post-excerpt">{{ post.text|slice:":30" }}...</p>
+            <div class="post-list-meta">
+                <span class="post-list-tags">{{post.tag.all|join:", "}}</span>
+            </div>
             <a href="{{ post.get_absolute_url }}" class="read-more">Read more</a>
         </div>
     {% endfor %}

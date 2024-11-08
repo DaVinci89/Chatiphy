@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.text import slugify
+from taggit.managers import TaggableManager
 
 User = get_user_model()
 
@@ -56,6 +57,7 @@ class Post(models.Model):
         upload_to="post_maker/img",
         blank=True
     )
+    tag = TaggableManager()
 
     class Meta:
         ordering = ('-pub_date',)

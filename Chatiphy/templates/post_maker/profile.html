@@ -34,6 +34,9 @@
                 <h2 class="post-list-title">{{ latest.title }}</h2>
             {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
+            <div class="post-list-meta">
+                <span class="post-list-tags">{{latest.tag.all|join:", "}}</span>
+            </div>
             <a href="{{ latest.get_absolute_url }}" class="read-more">Read more</a>
         </div>
         <br>
