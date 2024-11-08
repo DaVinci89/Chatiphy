@@ -13,7 +13,7 @@ class FeedbackForm(forms.Form):
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "text", "group", "image"]
+        fields = ["title", "text", "group", "image", "tag"]
         widgets = {"text": forms.Textarea(attrs={"placeholder":"Your message..."})}
 
 class CreateCommentForm(forms.ModelForm):
