@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils.text import slugify
 
 User = get_user_model()
@@ -70,6 +71,9 @@ class Post(models.Model):
         if not self.slug or slugify(self.title) != self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("post_maker:post_detail", args=[self.pk, self.slug])
 
 class Comment(models.Model):
     post = models.ForeignKey(
