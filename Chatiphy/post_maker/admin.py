@@ -32,7 +32,7 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("author", "post", "text", "created", "active")
+    list_display = ("author", "post", "text", "created", "updated", "active")
     search_fields = ("author", "text")
-    list_filter = ("active", "created")
+    list_filter = ("active", "created", "updated")
     empty_value_display = "--empty--"

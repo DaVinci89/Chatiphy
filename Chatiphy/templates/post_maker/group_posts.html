@@ -2,7 +2,7 @@
 {% block content %}
     {{ header|safe }}
     <br>
-    <p>{{ groups_count }} groups: </p>
+    <p>{{ groups_count }} group{{ groups_count|pluralize }}: </p>
     <br>
     {% for group in page_obj %}
         <div class="group">

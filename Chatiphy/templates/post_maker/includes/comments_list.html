@@ -1,5 +1,5 @@
 <div id="comments-list" class="comments-list">
-    <h3>Comments (<span id="comment-count">{{ comments.count }}</span>)</h3>
+    <h3>Comment{{ comments|pluralize}} (<span id="comment-count">{{ comments.count }}</span>)</h3>
     {% for comment in comments %}
         <div class="comment-item">
             <div class="comment-meta">
