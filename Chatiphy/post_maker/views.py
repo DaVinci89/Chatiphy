@@ -7,12 +7,14 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
+from taggit.models import Tag
 
 
 @login_required
-def index(request):
+def index(request, tag_slug=None):
     filter_option = request.GET.get("filter", "all")
     keyword = request.GET.get("q", None)
+    tag = None
     if filter_option == "followed":
         followed_authors = Subscription.objects.filter(subscriber=request.user).values_list("sub_author", flat=True)
         posts = Post.objects.filter(author__in=followed_authors)
@@ -20,13 +22,17 @@ def index(request):
     elif filter_option == "all":
         posts = Post.objects.all().order_by("-pub_date")
         show_followed = False
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tag__in=[tag])
     if keyword:
         posts = Post.objects.filter(text__contains=keyword).select_related("author").order_by("-pub_date")
     template = "post_maker/index.html"
     page_obj = paginator(request, posts, 5)
     context = {
         "page_obj": page_obj,
-        "show_followed":show_followed
+        "show_followed":show_followed,
+        "tag":tag
     }
     return render(request, template, context)
 
@@ -45,14 +51,19 @@ def group_posts(request):
     return render(request, template, context)
 
 @login_required
-def group_posts_page(request, page):
+def group_posts_page(request, page, tag_slug=None):
     template = "post_maker/group_posts_page.html"
     group = get_object_or_404(Group, slug=page)
+    tag = None
     posts = Post.objects.filter(group=group).order_by("-pub_date")
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tag__in=[tag])
     page_obj = paginator(request, posts, 5)
     context = {
         "group": group,
         "page_obj":page_obj,
+        "tag":tag
     }
     return render(request, template, context)
 
@@ -80,10 +91,14 @@ def feedback_success(request):
     return render(request, "post_maker/feedback_success.html")
 
 @login_required
-def profile(request, username):
+def profile(request, username, tag_slug=None):
     template = "post_maker/profile.html"
     user = get_object_or_404(User, username=username)
+    tag = None
     posts = Post.objects.filter(author=user).order_by("-pub_date")
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tag__in=[tag])
     latest = posts.latest("pub_date")
     latest_text = latest.text
     count = posts.count()
@@ -96,6 +111,7 @@ def profile(request, username):
                "latest":latest,
                "latest_text":latest_text,
                "user":user,
+               "tag":tag,
                'is_subscribed': user.id in subscriptions,}
     return render(request, template, context)
 

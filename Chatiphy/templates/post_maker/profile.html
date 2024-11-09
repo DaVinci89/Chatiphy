@@ -35,7 +35,10 @@
             {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
             <div class="post-list-meta">
-                <span class="post-list-tags">{{latest.tag.all|join:", "}}</span>
+                {% for tag in latest.tag.all %}
+                    <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' latest.author tag.slug %}">{{ tag.name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
             </div>
             <a href="{{ latest.get_absolute_url }}" class="read-more">Read more</a>
         </div>
