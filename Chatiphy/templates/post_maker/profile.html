@@ -33,6 +33,11 @@
             {% if latest.title %}
                 <h2 class="post-list-title">{{ latest.title }}</h2>
             {% endif %}
+            {% if latest.image %}
+                <div class="post-image">
+                    <img src="{{ latest.image.url }}" alt="{{ latest.title }}">
+                </div>
+            {% endif %}
             <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
             <div class="post-list-meta">
                 {% for tag in latest.tag.all %}
