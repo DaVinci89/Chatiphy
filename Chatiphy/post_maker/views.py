@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
 from taggit.models import Tag
+from django.db.models import Count
 
 
 @login_required
@@ -121,9 +122,13 @@ def post_detail(request, post_id, slug):
     post = get_object_or_404(Post, pk=post_id, slug=slug)
     comments = post.comments.filter(active=True)
     form = CreateCommentForm()
+    post_tags_ids = post.tag.values_list("id", flat=True)
+    similar_posts = Post.objects.filter(tag__in=post_tags_ids).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count('tag')).order_by('-same_tags', '-pub_date')[:4]
     context = {"post":post,
                "comments":comments,
-               "form":form}
+               "form":form,
+               "similar_posts":similar_posts}
     return render(request, template, context)
     
 @login_required

@@ -39,5 +39,7 @@
         {% include 'post_maker/includes/comment_form.html' %}
         {% include 'post_maker/includes/comments_list.html' %}
     </div>
+    <h2 class="block-header">Recommended posts</h2>
+    {% include 'post_maker/includes/post_list_recommend_by_tag.html' %}
 {% endblock %}
 {% block scripts %}{% endblock %}
