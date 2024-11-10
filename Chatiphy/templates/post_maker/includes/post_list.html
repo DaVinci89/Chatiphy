@@ -19,11 +19,11 @@
             <p class="post-excerpt">{{ post.text|slice:":30" }}...</p>
             <div class="post-list-meta">
                 {% for tag in post.tag.all %}
-                {% if request.resolver_match.view_name == "post_maker:index" %}
+                {% if request.resolver_match.view_name == "post_maker:index" or request.resolver_match.view_name == "post_maker:index_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:index_by_tag' tag.slug %}">{{ tag.name }}</a>
-                {% elif request.resolver_match.view_name == "post_maker:group_page" %}
+                {% elif request.resolver_match.view_name == "post_maker:group_page" or request.resolver_match.view_name == "post_maker:group_page_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:group_page_by_tag' post.group.slug tag.slug %}">{{ tag.name }}</a>
-                {% elif request.resolver_match.view_name == "post_maker:profile" %}
+                {% elif request.resolver_match.view_name == "post_maker:profile" or request.resolver_match.view_name == "post_maker:profile_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' post.author tag.slug %}">{{ tag.name }}</a>
                 {% endif %}
                 {% if not forloop.last %}, {% endif %}
