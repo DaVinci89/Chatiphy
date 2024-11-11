@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+{% load post_tags %}
 {% block title %}Post{% endblock %}
 {% block content %}
     <div class="post-container">
@@ -20,7 +21,7 @@
             </div>
             {% endif %}
             <div class="post-content">
-                <p>{{ post.text }}</p>
+                <p>{{ post.text|markdown }}</p>
             </div>
             <div class="post-list-meta">
                 {% for tag in post.tag.all %}

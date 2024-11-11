@@ -1,3 +1,4 @@
+{% load post_tags %}
 <div class="post-list">
     {% for post in page_obj %}
         <div class="post-list-item">
@@ -16,7 +17,7 @@
                     <img src="{{ post.image.url }}" alt="{{ post.title }}">
                 </div>
             {% endif %}
-            <p class="post-excerpt">{{ post.text|slice:":30" }}...</p>
+            <p class="post-excerpt">{{ post.text|markdown|truncatewords_html:30 }}...</p>
             <div class="post-list-meta">
                 {% for tag in post.tag.all %}
                 {% if request.resolver_match.view_name == "post_maker:index" or request.resolver_match.view_name == "post_maker:index_by_tag" %}
