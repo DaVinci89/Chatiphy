@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load post_tags %}
 {% block title %}Profile: {{ username }}{% endblock %}
-{% block header %}<h2 class="block-header">All posts by <i>{{ username }}</i></h2>{% endblock %}
+{% block header %}<h2 class="block-header">All posts by <i>{{ username }}: {% total_user_posts user %}</i></h2>{% endblock %}
 {% block content %}
     <div>
         {% if request.user.username != username %}

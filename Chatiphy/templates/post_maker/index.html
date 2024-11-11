@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load post_tags %}
 {% block header %}
+    <h2 class="block-header">All posts: {% total_posts %}</h2>
     {% if tag %}
         <h2 class="block-header">Posts tagged with {{ tag.name }}</h2>
     {% else %}
@@ -12,6 +14,7 @@
     <br>
     {% include 'post_maker/includes/paginator.html' %}
     <br>
+    {% include 'post_maker/includes/most_commented_posts.html' %}
 {% endblock %}
 {% block scripts %}
     <script>
