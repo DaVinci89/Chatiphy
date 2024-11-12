@@ -1,12 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from django.conf import settings
 from .models import Post, Group, Subscription
 from django.core.paginator import Paginator
-from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .forms import FeedbackForm, CreatePostForm, CreateCommentForm
+from .forms import CreatePostForm, CreateCommentForm
 from taggit.models import Tag
 from django.db.models import Count
 
@@ -68,28 +66,7 @@ def group_posts_page(request, page, tag_slug=None):
     }
     return render(request, template, context)
 
-@login_required
-def feedback(request):
-    if request.method == "POST":
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data["name"]
-            email = form.cleaned_data["email"]
-            subject = form.cleaned_data["subject"]
-            message = form.cleaned_data["body"]
-            send_mail( f'New Feedback Form {subject} from {name}',
-                f'Message: {message}\n\nFrom: {name} ({email})',
-                settings.DEFAULT_FROM_EMAIL,
-                ['workdavinci39@gmail.com'],
-                fail_silently=False)
-            return redirect("post_maker:feedback_success")
-        return render(request, "post_maker/feedback.html", {"form":form})
-    form = FeedbackForm()
-    return render(request, "post_maker/feedback.html", {"form":form})
 
-@login_required
-def feedback_success(request):
-    return render(request, "post_maker/feedback_success.html")
 
 @login_required
 def profile(request, username, tag_slug=None):
