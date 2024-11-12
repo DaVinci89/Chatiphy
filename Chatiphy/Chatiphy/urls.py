@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
+from post_maker.post_sitemaps import PostSitemap
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,6 +27,10 @@ handler403 = 'core.views.forbidden'
 handler500 = 'core.views.server_error'
 handler503 = 'core.views.unavailable'
 
+sitemaps = {
+    'posts':PostSitemap,
+}
+
 urlpatterns = [
     path('', include("post_maker.urls", namespace="post_maker")),
     path('groups/', include("post_maker.urls", namespace="post_maker")),
@@ -32,6 +38,7 @@ urlpatterns = [
     path("auth/", include("users.urls", namespace="users")),
     path("auth/", include("django.contrib.auth.urls")),
     path("about/", include("about.urls", namespace="about")),
+    path("sitemap.xml/", sitemap, {'sitemaps':sitemaps,}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
