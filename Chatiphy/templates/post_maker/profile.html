@@ -39,7 +39,7 @@
                     <img src="{{ latest.image.url }}" alt="{{ latest.title }}">
                 </div>
             {% endif %}
-            <p class="post-excerpt">{{ latest.text|slice:":30" }}...</p>
+            <p class="post-excerpt">{{ latest.text|markdown|truncatewords_html:30 }}...</p>
             <div class="post-list-meta">
                 {% for tag in latest.tag.all %}
                     <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' latest.author tag.slug %}">{{ tag.name }}</a>
