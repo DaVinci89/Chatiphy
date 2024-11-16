@@ -26,11 +26,17 @@
                     <a class="post-list-tags" href="{% url 'post_maker:group_page_by_tag' post.group.slug tag.slug %}">{{ tag.name }}</a>
                 {% elif request.resolver_match.view_name == "post_maker:profile" or request.resolver_match.view_name == "post_maker:profile_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' post.author tag.slug %}">{{ tag.name }}</a>
+                {% elif request.resolver_match.view_name == "post_maker:search_field" or request.resolver_match.view_name == "post_maker:search_field_by_tag" %}
+                    <a class="post-list-tags" href="{% url 'post_maker:search_field_by_tag' tag.slug %}">{{ tag.name }}</a>
                 {% endif %}
                 {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
             <a href="{{ post.get_absolute_url }}" class="read-more">Read more</a>
         </div>
+    {% empty %}
+        {% if request.resolver_match.view_name == "post_maker:search_field" or request.resolver_match.view_name == "post_maker:search_field_by_tag" %}
+            <p>No results for search query.</p>
+        {% endif %}
     {% endfor %}
 </div>

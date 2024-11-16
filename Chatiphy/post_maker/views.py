@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from django.contrib.postgres.search import SearchVector
 from .models import Post, Group, Subscription
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,6 @@ from django.db.models import Count
 @login_required
 def index(request, tag_slug=None):
     filter_option = request.GET.get("filter", "all")
-    keyword = request.GET.get("q", None)
     tag = None
     if filter_option == "followed":
         followed_authors = Subscription.objects.filter(subscriber=request.user).values_list("sub_author", flat=True)
@@ -24,8 +24,6 @@ def index(request, tag_slug=None):
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tag__in=[tag])
-    if keyword:
-        posts = Post.objects.filter(text__contains=keyword).select_related("author").order_by("-pub_date")
     template = "post_maker/index.html"
     page_obj = paginator(request, posts, 5)
     context = {
@@ -35,7 +33,27 @@ def index(request, tag_slug=None):
     }
     return render(request, template, context)
 
-
+def search_field(request, tag_slug=None):
+    query = request.GET.get('q', None)
+    tag = None
+    results = Post.objects.all()
+    if query:
+        results = Post.objects.annotate(
+            search=SearchVector('title', 'text'),
+        ).filter(search=query)
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        results = results.filter(tag__in=[tag])
+    count = results.count()
+    page_obj = paginator(request, results, 5)
+    return render(request,
+                  'post_maker/search.html',
+                  {
+                      'query': query,
+                      'page_obj': page_obj,
+                      'tag': tag,
+                      'count': count
+                  })
 def group_posts(request):
     template = "post_maker/group_posts.html"
     text = "<h2><b>Groups</b><h2>"

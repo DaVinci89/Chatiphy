@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load post_tags %}
+{% if query %}
+    {% block header %}
+        <h2 class="block-header">Posts containing {{ query }}</h2>
+    {% endblock %}
+    {% block content %}
+        <h3>
+            Found {{ count }} result{{ count|pluralize }}
+        </h3>
+        {% include "post_maker/includes/post_list.html" %}
+        <br>
+        {% include 'post_maker/includes/paginator.html' %}
+        <br>
+    {% endblock %}
+{% endif %}
+{% block scripts %}
+    <script>
+        document.getElementById('all-posts-btn').addEventListener('click', function() {
+            window.location.href = "{% url 'post_maker:index' %}?filter=all";
+        });
+
+        document.getElementById('followed-posts-btn').addEventListener('click', function() {
+            window.location.href = "{% url 'post_maker:index' %}?filter=followed";
+        });
+    </script>
+{% endblock %}
