@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models import F, Q
 from .models import Post, Group, Subscription
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -34,13 +35,16 @@ def index(request, tag_slug=None):
     return render(request, template, context)
 
 def search_field(request, tag_slug=None):
-    query = request.GET.get('q', None)
+    query = request.GET.get('q', '').strip()
     tag = None
     results = Post.objects.all()
     if query:
         results = Post.objects.annotate(
-            search=SearchVector('title', 'text'),
-        ).filter(search=query)
+            title_similarity=TrigramSimilarity('title', query),
+            text_similarity=TrigramSimilarity('text', query),
+            author_similarity=TrigramSimilarity('author__username', query),
+            combined_similarity=F('title_similarity')+F('text_similarity')+F('author_similarity')
+        ).filter(Q(title_similarity__gt=0.1)|Q(text_similarity__gt=0.1)|Q(author_similarity__gt=0.1)).order_by('-combined_similarity')
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         results = results.filter(tag__in=[tag])
