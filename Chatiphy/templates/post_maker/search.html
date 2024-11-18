@@ -14,14 +14,3 @@
         <br>
     {% endblock %}
 {% endif %}
-{% block scripts %}
-    <script>
-        document.getElementById('all-posts-btn').addEventListener('click', function() {
-            window.location.href = "{% url 'post_maker:index' %}?filter=all";
-        });
-
-        document.getElementById('followed-posts-btn').addEventListener('click', function() {
-            window.location.href = "{% url 'post_maker:index' %}?filter=followed";
-        });
-    </script>
-{% endblock %}
