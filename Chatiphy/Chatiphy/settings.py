@@ -154,3 +154,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'chatiphy.mail@gmail.com'
 EMAIL_HOST_PASSWORD = 'vmzh qaow moau pvfb'
 DEFAULT_FROM_EMAIL = 'no-reply@chatiphy.gmail.com'
+
+TELEGRAM_BOT_TOKEN = '7790892397:AAHx1DJsOmluRApBBIwbWKm1-qAG5gNq_iQ'
+TELEGRAM_CHANNEL_ID = '@chatiphy'  # або ID каналу

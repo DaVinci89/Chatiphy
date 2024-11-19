@@ -3,8 +3,17 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
+import telegram
+from telegram.error import TelegramError
+from telegram.constants import ParseMode
+from django.conf import settings
+import asyncio
+
 
 User = get_user_model()
+# Отримайте токен і ID каналу з налаштувань або змінних оточення
+TELEGRAM_TOKEN = settings.TELEGRAM_BOT_TOKEN  # Збережіть токен у налаштуваннях
+TELEGRAM_CHANNEL_ID = settings.TELEGRAM_CHANNEL_ID  # ID вашого каналу
 
 
 class Group(models.Model):
@@ -70,10 +79,33 @@ class Post(models.Model):
         return self.text[:15]
 
     def save(self, *args, **kwargs):
+        is_new = self.pk is None
         if not self.slug or slugify(self.title) != self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+        if is_new:  # Якщо це новий публічний пост, відправляємо в Telegram
+            self.send_post_to_telegram()
 
+    def send_post_to_telegram(self):
+        async def async_send():
+            """Відправка поста в Telegram-канал"""
+            bot = telegram.Bot(token=TELEGRAM_TOKEN)
+            message = (
+                f"📝 **{self.title}**\n\n"
+                f"{self.text[:200]}...\n\n"  # Показуємо лише перші 200 символів
+                f"🔗 [Читати більше на Chatiphy]({self.get_absolute_url()})"
+            )
+            try:
+                await bot.send_message(
+                    chat_id=TELEGRAM_CHANNEL_ID,
+                    text=message,
+                    parse_mode=ParseMode.MARKDOWN
+                )
+            except TelegramError as e:
+                # Логування помилок (можна додати логер)
+                print(f"Не вдалося надіслати повідомлення в Telegram: {e}")
+
+        asyncio.run(async_send())
     def get_absolute_url(self):
         return reverse("post_maker:post_detail", args=[self.pk, self.slug])
 
