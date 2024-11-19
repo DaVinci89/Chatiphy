@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -93,14 +95,22 @@ class Post(models.Model):
             message = (
                 f"📝 **{self.title}**\n\n"
                 f"{self.text[:200]}...\n\n"  # Показуємо лише перші 200 символів
-                f"🔗 [Читати більше на Chatiphy]({self.get_absolute_url()})"
+                f"🔗 [Читати більше на Chatiphy]({settings.SITE_URL}{self.get_absolute_url()})"
             )
             try:
-                await bot.send_message(
-                    chat_id=TELEGRAM_CHANNEL_ID,
-                    text=message,
-                    parse_mode=ParseMode.MARKDOWN
-                )
+                if self.image:
+                    with open(self.image.path, 'rb') as image_file:
+                        await bot.send_photo(chat_id=TELEGRAM_CHANNEL_ID,
+                                             photo=image_file,
+                                             caption=message,
+                                             parse_mode=ParseMode.MARKDOWN
+                                             )
+                else:
+                    await bot.send_message(
+                        chat_id=TELEGRAM_CHANNEL_ID,
+                        text=message,
+                        parse_mode=ParseMode.MARKDOWN
+                    )
             except TelegramError as e:
                 # Логування помилок (можна додати логер)
                 print(f"Не вдалося надіслати повідомлення в Telegram: {e}")

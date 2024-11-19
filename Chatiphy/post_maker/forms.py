@@ -1,8 +1,10 @@
 from django import forms
+from taggit.forms import TagField
 from .models import Post, Comment
 
 
 class CreatePostForm(forms.ModelForm):
+    tag = TagField(required=False)
     class Meta:
         model = Post
         fields = ["title", "text", "group", "image", "tag"]
