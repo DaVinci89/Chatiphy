@@ -4,7 +4,7 @@
         <div class="post-list-item">
             <div class="post-list-meta">
                 <span class="post-list-date">{{post.pub_date|date:"d E Y"}}</span>
-                <span class="post-list-author">by <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></span>
+                <span class="post-list-author">by <a href="{% url 'users:profile' post.author %}">{{ post.author }}</a></span>
                 {% if post.group %}
                     <span class="post-list-group"><a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group }}</a></span>
                 {% endif %}
@@ -24,8 +24,8 @@
                     <a class="post-list-tags" href="{% url 'post_maker:index_by_tag' tag.slug %}">{{ tag.name }}</a>
                 {% elif request.resolver_match.view_name == "post_maker:group_page" or request.resolver_match.view_name == "post_maker:group_page_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:group_page_by_tag' post.group.slug tag.slug %}">{{ tag.name }}</a>
-                {% elif request.resolver_match.view_name == "post_maker:profile" or request.resolver_match.view_name == "post_maker:profile_by_tag" %}
-                    <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' post.author tag.slug %}">{{ tag.name }}</a>
+                {% elif request.resolver_match.view_name == "users:profile" or request.resolver_match.view_name == "users:profile_by_tag" %}
+                    <a class="post-list-tags" href="{% url 'users:profile_by_tag' post.author tag.slug %}">{{ tag.name }}</a>
                 {% elif request.resolver_match.view_name == "post_maker:search_field" or request.resolver_match.view_name == "post_maker:search_field_by_tag" %}
                     <a class="post-list-tags" href="{% url 'post_maker:search_field_by_tag' tag.slug %}">{{ tag.name }}</a>
                 {% endif %}

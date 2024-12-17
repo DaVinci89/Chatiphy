@@ -1,22 +1,36 @@
 {% extends 'base.html' %}
 {% load post_tags %}
 {% block title %}Profile: {{ username }}{% endblock %}
-{% block header %}<h2 class="block-header">All posts by <i>{{ username }}: {% total_user_posts user %}</i></h2>{% endblock %}
+{% block header %}<h2 class="block-header"><i>{{ username }}</i></h2>{% endblock %}
 {% block content %}
-    <div>
+    <div class="account">
+        <div class="profile_page">
+            <img src="{{ profile.get_profile_image_url }}" alt="Аватар" width="150">
+            <h2>{{ profile.name }}</h2>
+            {% if profile.date_of_birth %}
+                <p>Дата народження: {{ profile.date_of_birth }}</p>
+            {% endif %}
+            {% if profile.location %}
+                <p>Місце проживання: {{ profile.location }}</p>
+            {% endif %}
+            {% if profile.bio %}
+                <p>Про себе: {{ profile.bio }}</p>
+            {% endif %}
+        </div>
         {% if request.user.username != username %}
             {% if is_subscribed %}
-                <form action="{% url 'post_maker:unsubscribe' username %}" method="post">
+                <form action="{% url 'users:unsubscribe' username %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Unfollow</button>
                 </form>
             {% else %}
-                <form action="{% url 'post_maker:subscribe' username %}" method="post">
+                <form action="{% url 'users:subscribe' username %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Follow</button>
                 </form>
             {% endif %}
         {% endif %}
+
         <h3>Post{{ count|pluralize }}: {{ count }}</h3>
         <br>
         <hr>
@@ -26,7 +40,7 @@
         <div class="post-list-item post-list">
             <div class="post-list-meta">
                 <span class="post-list-date">{{latest.pub_date|date:"d E Y"}}</span>
-                <span class="post-list-author">by <a href="{% url 'post_maker:profile' latest.author %}">{{ latest.author }}</a></span>
+                <span class="post-list-author">by <a href="{% url 'users:profile' latest.author %}">{{ latest.author }}</a></span>
                 {% if latest.group %}
                     <span class="post-list-group"><a href="{% url 'post_maker:group_page' latest.group.slug %}">{{ latest.group }}</a></span>
                 {% endif %}
@@ -42,7 +56,7 @@
             <p class="post-excerpt">{{ latest.text|markdown|truncatewords_html:30 }}...</p>
             <div class="post-list-meta">
                 {% for tag in latest.tag.all %}
-                    <a class="post-list-tags" href="{% url 'post_maker:profile_by_tag' latest.author tag.slug %}">{{ tag.name }}</a>
+                    <a class="post-list-tags" href="{% url 'users:profile_by_tag' latest.author tag.slug %}">{{ tag.name }}</a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
@@ -61,5 +75,8 @@
         <br>
         {% include 'post_maker/includes/paginator.html' %}
         <br>
+        {% if is_owner %}
+            <a href="{% url 'users:edit_profile' username=request.user.username %}" class="btn btn-success">Редагувати профіль</a>
+        {% endif %}
     </div>
 {% endblock %}

@@ -90,30 +90,7 @@ def group_posts_page(request, page, tag_slug=None):
 
 
 
-@login_required
-def profile(request, username, tag_slug=None):
-    template = "post_maker/profile.html"
-    user = get_object_or_404(User, username=username)
-    tag = None
-    posts = Post.objects.filter(author=user).order_by("-pub_date")
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        posts = posts.filter(tag__in=[tag])
-    latest = posts.latest("pub_date")
-    latest_text = latest.text
-    count = posts.count()
-    page_obj = paginator(request, posts, 5)
-    subscriptions = Subscription.objects.filter(subscriber=request.user).values_list('sub_author', flat=True)
 
-    context = {"username":username,
-               "count":count,
-               "page_obj":page_obj,
-               "latest":latest,
-               "latest_text":latest_text,
-               "user":user,
-               "tag":tag,
-               'is_subscribed': user.id in subscriptions,}
-    return render(request, template, context)
 
 @login_required
 def post_detail(request, post_id, slug):
@@ -177,7 +154,7 @@ def subscribe(request, username):
     if request.user != sub_author:
         Subscription.objects.get_or_create(subscriber=request.user, sub_author=sub_author)
         request.user.follow = True
-    return redirect("post_maker:profile", username)
+    return redirect("users:profile", username)
 
 @login_required
 def unsubscribe(request, username):
@@ -185,7 +162,7 @@ def unsubscribe(request, username):
     if request.user != sub_author:
         Subscription.objects.filter(subscriber=request.user, sub_author=sub_author).delete()
         request.user.follow = False
-    return redirect("post_maker:profile", username)
+    return redirect("users:profile", username)
 @login_required
 def paginator(request, posts, pages):
     paginator_obj = Paginator(posts, pages)

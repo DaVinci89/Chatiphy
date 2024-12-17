@@ -35,10 +35,12 @@ urlpatterns = [
     path('', include("post_maker.urls", namespace="post_maker")),
     path('groups/', include("post_maker.urls", namespace="post_maker")),
     path('admin/', admin.site.urls),
+    path('profile/', include("users.urls", namespace="users")),
     path("auth/", include("users.urls", namespace="users")),
     path("auth/", include("django.contrib.auth.urls")),
     path("about/", include("about.urls", namespace="about")),
     path("sitemap.xml/", sitemap, {'sitemaps':sitemaps,}, name='django.contrib.sitemaps.views.sitemap'),
+
 ]
 
 if settings.DEBUG:

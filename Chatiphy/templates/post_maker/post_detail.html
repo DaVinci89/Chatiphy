@@ -7,7 +7,7 @@
         <div class="post-item">
             <div class="post-meta">
                 <span class="post-date">{{ post.pub_date|date:"d E Y H:i:s" }}</span>
-                <span class="post-author">by <a href="{% url 'post_maker:profile' post.author %}">{{ post.author }}</a></span>
+                <span class="post-author">by <a href="{% url 'users:profile' post.author %}">{{ post.author }}</a></span>
                 {% if post.group %}
                     <span class="post-group"><a href="{% url 'post_maker:group_page' post.group.slug %}">{{ post.group.title }}</a></span>
                 {% endif %}

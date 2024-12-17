@@ -1,5 +1,5 @@
 .block-header {
-    font-size: 3rem;
+    font-size: 2em;
     color: #333;
     margin-bottom: 10px;
     text-align: center;
@@ -30,7 +30,15 @@
 
 .post-list-meta {
     font-size: 1.1rem;
-    color: #777;
+    color: #888;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-list-title {
+    font-size: 1.5em;
+    color: #333;
     margin-bottom: 10px;
 }
 
@@ -52,6 +60,17 @@
     color: #555;
     line-height: 1.6;
     margin-bottom: 15px;
+}
+
+.post-list-tags {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+.post-list-tags:hover {
+    text-decoration: none;
 }
 
 .read-more {
@@ -193,6 +212,35 @@
     background-color: #007bff;
     color: white;
     border: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
