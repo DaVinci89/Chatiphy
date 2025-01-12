@@ -66,7 +66,7 @@ def profile(request, username, tag_slug=None):
     return render(request, template, context)
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, username):
     profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
@@ -75,4 +75,4 @@ def edit_profile(request):
             return redirect('profile', username=request.user.username)
     else:
         form = ProfileForm(instance=profile)
-    return render(request, 'users/edit_profile.html', {'form': form})
+    return render(request, 'users/edit_profile.html', {'form': form, "username":username})
