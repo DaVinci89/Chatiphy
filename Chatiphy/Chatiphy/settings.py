@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.postgres',
     'sorl.thumbnail',
-    'taggit'
+    'taggit',
+    'rest_framework'
 ]
 
 SITE_ID = 1

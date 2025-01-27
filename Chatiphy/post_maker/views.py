@@ -2,13 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import F, Q
-from .models import Post, Group, Subscription
+from .models import Post, Group, Comment, Subscription, PostSerializer, GroupSerializer, CommentSerializer
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import CreatePostForm, CreateCommentForm
 from taggit.models import Tag
 from django.db.models import Count
+from django.http import JsonResponse
 
 
 @login_required
@@ -168,3 +169,18 @@ def paginator(request, posts, pages):
     paginator_obj = Paginator(posts, pages)
     page_number = request.GET.get('page')
     return paginator_obj.get_page(page_number)
+
+def get_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    serializer = PostSerializer(post)
+    return JsonResponse(serializer.data)
+
+def get_group(request, page):
+    group = get_object_or_404(Group, slug=page)
+    serializer = GroupSerializer(group)
+    return JsonResponse(serializer.data)
+
+def get_comment(request, post_id):
+    comment = get_object_or_404(Comment, post_id=post_id)
+    serializer = CommentSerializer(comment)
+    return JsonResponse(serializer.data)

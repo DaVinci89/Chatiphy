@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from post_maker.models import Post
 from post_maker.views import paginator, Subscription
 from taggit.models import Tag
+from django.http import JsonResponse
 
 
 class SignUp(CreateView):
@@ -76,3 +77,8 @@ def edit_profile(request, username):
     else:
         form = ProfileForm(instance=profile)
     return render(request, 'users/edit_profile.html', {'form': form, "username":username})
+
+def get_profile(request, username):
+    profile = get_object_or_404(Profile, username=username)
+    serializer = ProfileSerializer(profile)
+    return JsonResponse(serializer.data)

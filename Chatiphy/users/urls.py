@@ -20,4 +20,7 @@ urlpatterns = [
     path("<str:username>/", views.profile, name="profile"),
     path("<str:username>/edit/", views.edit_profile, name="edit_profile"),
     path("<str:username>/<slug:tag_slug>/", views.profile, name="profile_by_tag"),
+    path("profile/<str:username>/", views.get_profile, name="get_profile_api"),
+
 ]
+

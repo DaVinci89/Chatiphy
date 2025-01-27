@@ -40,6 +40,8 @@ urlpatterns = [
     path("auth/", include("django.contrib.auth.urls")),
     path("about/", include("about.urls", namespace="about")),
     path("sitemap.xml/", sitemap, {'sitemaps':sitemaps,}, name='django.contrib.sitemaps.views.sitemap'),
+    path("api/v1/", include("post_maker.urls", namespace="post_maker")),
+    path("api/v2/", include("users.urls", namespace="users"))
 
 ]
 

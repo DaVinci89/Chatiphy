@@ -8,6 +8,7 @@ from telegram.error import TelegramError
 from telegram.constants import ParseMode
 from django.conf import settings
 import asyncio
+from rest_framework.serializers import ModelSerializer
 
 
 User = get_user_model()
@@ -23,6 +24,11 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
+class GroupSerializer(ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('title', 'slug', 'description')
 
 
 class Post(models.Model):
@@ -117,6 +123,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post_maker:post_detail", args=[self.pk, self.slug])
 
+class PostSerializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('title', 'text', 'slug', 'created', 'pub_date', 'updated', 'author', 'group', 'image')
+
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
@@ -151,6 +162,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.author} on {self.post}"
+
+
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('post', 'author', 'text', 'created', 'updated', 'image', 'active')
 
 class Subscription(models.Model):
     subscriber = models.ForeignKey(
