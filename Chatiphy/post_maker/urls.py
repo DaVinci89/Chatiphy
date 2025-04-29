@@ -15,8 +15,8 @@ urlpatterns = [
     path("posts/<int:post_id>/comment", views.add_comment, name="add_comment"),
     path("posts/<int:post_id>/<slug:slug>/edit/", views.edit_post, name="edit_post"),
     path("create_post/", views.create_post, name="create_post"),
-    path("posts/<int:pk>", views.get_post, name="get_post_api"),
-    path("group/<slug:page>/", views.get_group, name="get_group_api"),
+    path("posts/<int:pk>", views.PostDetail.as_view(), name="get_post_api"),
+    path("group/<slug:page>/", views.GroupDetail.as_view(), name="get_group_api"),
     path("comments/<int:post_id>/", views.get_comment, name="get_comment_api")
 
 ]

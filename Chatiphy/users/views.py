@@ -44,11 +44,17 @@ def profile(request, username, tag_slug=None):
     profile = user.profile
     tag = None
     posts = Post.objects.filter(author=user).order_by("-pub_date")
+
+    # Перевірка, чи є пости
+    latest = None
+    latest_text = ""
+    if posts.exists():
+        latest = posts.latest("pub_date")
+        latest_text = latest.text
+
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tag__in=[tag])
-    latest = posts.latest("pub_date")
-    latest_text = latest.text
     count = posts.count()
     page_obj = paginator(request, posts, 5)
     subscriptions = Subscription.objects.filter(subscriber=request.user).values_list('sub_author', flat=True)
@@ -73,7 +79,7 @@ def edit_profile(request, username):
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile', username=request.user.username)
+            return redirect('users:profile', username=request.user.username)
     else:
         form = ProfileForm(instance=profile)
     return render(request, 'users/edit_profile.html', {'form': form, "username":username})

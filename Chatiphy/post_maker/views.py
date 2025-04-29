@@ -10,6 +10,7 @@ from .forms import CreatePostForm, CreateCommentForm
 from taggit.models import Tag
 from django.db.models import Count
 from django.http import JsonResponse
+from rest_framework import generics
 
 
 @login_required
@@ -117,7 +118,7 @@ def create_post(request):
             post.author = request.user
             post.save()
             form.save_m2m()
-            return redirect("post_maker:profile", username = request.user.username)
+            return redirect("post_maker:post_detail", pk=post.id, slug=post.slug)
     else:
         form = CreatePostForm()
     return render(request, "post_maker/create_post.html", {"form":form})
@@ -170,16 +171,13 @@ def paginator(request, posts, pages):
     page_number = request.GET.get('page')
     return paginator_obj.get_page(page_number)
 
-def get_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    serializer = PostSerializer(post)
-    return JsonResponse(serializer.data)
+class PostDetail(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-def get_group(request, page):
-    group = get_object_or_404(Group, slug=page)
-    serializer = GroupSerializer(group)
-    return JsonResponse(serializer.data)
-
+class GroupDetail(generics.RetrieveAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 def get_comment(request, post_id):
     comment = get_object_or_404(Comment, post_id=post_id)
     serializer = CommentSerializer(comment)

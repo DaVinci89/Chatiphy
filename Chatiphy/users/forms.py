@@ -1,7 +1,9 @@
+import pytz
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from .models import Profile
+from datetime import datetime
 
 User = get_user_model()
 
@@ -28,3 +30,10 @@ class ProfileForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
             'bio': forms.Textarea(attrs={'rows': 4}),
         }
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get("date_of_birth")
+        timezone = pytz.timezone('UTC')
+        if date_of_birth and date_of_birth > datetime.now(timezone):
+            raise forms.ValidationError("Date of birth cannot be in the future.")
+        return date_of_birth
