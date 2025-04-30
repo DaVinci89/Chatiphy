@@ -1,4 +1,5 @@
 {% load post_tags %}
+{% load filters %}
 <div class="post-list">
     {% for post in page_obj %}
         <div class="post-list-item">
@@ -32,6 +33,18 @@
                 {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
+            {% with likes_dict|get_item:post.id as liked %}
+            <button id="like-btn-{{ post.id }}"
+                    class="{% if likes_dict %}active-like{% endif %}"
+                    onclick="likeDislikePost({{ post.id }}, true)">Like</button>
+
+            <button id="dislike-btn-{{ post.id }}"
+                    class="{% if likes_dict %}active-dislike{% endif %}"
+                    onclick="likeDislikePost({{ post.id }}, false)">Dislike</button>
+            {% endwith %}
+
+            <p>Likes: <span id="likes-count-{{ post.id }}">{{ post.likes_count }}</span></p>
+            <p>Dislikes: <span id="dislikes-count-{{ post.id }}">{{ post.dislikes_count }}</span></p>
             <a href="{{ post.get_absolute_url }}" class="read-more">Read more</a>
         </div>
     {% empty %}

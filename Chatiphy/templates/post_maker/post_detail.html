@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
 {% load post_tags %}
+{% load filters %}
 {% block title %}Post{% endblock %}
 {% block content %}
     <div class="post-container">
@@ -29,6 +30,18 @@
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
+            {% with likes_dict|get_item:post.id as liked %}
+            <button id="like-btn-{{ post.id }}"
+                    class="{% if liked %}active-like{% endif %}"
+                    onclick="likeDislikePost({{ post.id }}, true)">Like</button>
+
+            <button id="dislike-btn-{{ post.id }}"
+                    class="{% if liked %}active-dislike{% endif %}"
+                    onclick="likeDislikePost({{ post.id }}, false)">Dislike</button>
+            {% endwith %}
+
+            <p>Likes: <span id="likes-count-{{ post.id }}">{{ post.likes_count }}</span></p>
+            <p>Dislikes: <span id="dislikes-count-{{ post.id }}">{{ post.dislikes_count }}</span></p>
             {% if request.user == post.author %}
                 <div class="post-actions">
                     <a class="edit-button" href="{% url 'post_maker:edit_post' post.id post.slug %}">Edit</a>
@@ -43,4 +56,3 @@
     <h2 class="block-header">Recommended posts</h2>
     {% include 'post_maker/includes/post_list_recommend_by_tag.html' %}
 {% endblock %}
-{% block scripts %}{% endblock %}

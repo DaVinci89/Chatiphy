@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import F, Q
-from .models import Post, Group, Comment, Subscription, PostSerializer, GroupSerializer, CommentSerializer
+from .models import Post, Group, Comment, Subscription, PostSerializer, GroupSerializer, CommentSerializer, LikeDislike
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -29,10 +29,13 @@ def index(request, tag_slug=None):
         posts = posts.filter(tag__in=[tag])
     template = "post_maker/index.html"
     page_obj = paginator(request, posts, 5)
+    user_likes = LikeDislike.objects.filter(user=request.user, post__in=posts)
+    likes_dict = {ld.post.id: ld.is_like for ld in user_likes}
     context = {
         "page_obj": page_obj,
         "show_followed":show_followed,
-        "tag":tag
+        "tag":tag,
+        "likes_dict":likes_dict
     }
     return render(request, template, context)
 
@@ -83,10 +86,13 @@ def group_posts_page(request, page, tag_slug=None):
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tag__in=[tag])
     page_obj = paginator(request, posts, 5)
+    user_likes = LikeDislike.objects.filter(user=request.user, post__in=posts)
+    likes_dict = {ld.post.id: ld.is_like for ld in user_likes}
     context = {
         "group": group,
         "page_obj":page_obj,
-        "tag":tag
+        "tag":tag,
+        "likes_dict": likes_dict
     }
     return render(request, template, context)
 
@@ -103,10 +109,13 @@ def post_detail(request, post_id, slug):
     post_tags_ids = post.tag.values_list("id", flat=True)
     similar_posts = Post.objects.filter(tag__in=post_tags_ids).exclude(id=post.id)
     similar_posts = similar_posts.annotate(same_tags=Count('tag')).order_by('-same_tags', '-pub_date')[:4]
+    user_likes = LikeDislike.objects.filter(user=request.user, post=post)
+    likes_dict = {ld.post.id: ld.is_like for ld in user_likes}
     context = {"post":post,
                "comments":comments,
                "form":form,
-               "similar_posts":similar_posts}
+               "similar_posts":similar_posts,
+               "likes_dict":likes_dict}
     return render(request, template, context)
     
 @login_required
@@ -118,7 +127,7 @@ def create_post(request):
             post.author = request.user
             post.save()
             form.save_m2m()
-            return redirect("post_maker:post_detail", pk=post.id, slug=post.slug)
+            return redirect("post_maker:post_detail", post_id=post.id, slug=post.slug)
     else:
         form = CreatePostForm()
     return render(request, "post_maker/create_post.html", {"form":form})
@@ -137,6 +146,27 @@ def edit_post(request, post_id, slug):
         form = CreatePostForm(instance=post)
     context = {"form":form, "is_edit":True, "post":post}
     return render(request, "post_maker/create_post.html", context)
+
+@login_required
+def like_dislike_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    user = request.user
+    is_like = request.GET.get('is_like') == 'true'
+    like_dislike, created = LikeDislike.objects.get_or_create(user=user, post=post)
+
+    like_dislike.is_like = is_like
+    like_dislike.save()
+
+    likes_count = LikeDislike.objects.filter(post=post, is_like=True).count()
+    dislikes_count = LikeDislike.objects.filter(post=post, is_like=False).count()
+
+    return JsonResponse({
+        "likes_count": likes_count,
+        "dislikes_count": dislikes_count,
+        "status": "success"
+    })
+
+
 
 @login_required
 @require_POST

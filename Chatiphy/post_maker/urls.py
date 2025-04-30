@@ -17,6 +17,7 @@ urlpatterns = [
     path("create_post/", views.create_post, name="create_post"),
     path("posts/<int:pk>", views.PostDetail.as_view(), name="get_post_api"),
     path("group/<slug:page>/", views.GroupDetail.as_view(), name="get_group_api"),
-    path("comments/<int:post_id>/", views.get_comment, name="get_comment_api")
+    path("comments/<int:post_id>/", views.get_comment, name="get_comment_api"),
+    path('like-dislike/<int:post_id>/', views.like_dislike_post, name='like_dislike_post'),
 
 ]

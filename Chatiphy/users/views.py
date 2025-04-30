@@ -6,7 +6,7 @@ from .forms import FormCreation, ProfileForm
 from django.contrib.auth import logout
 from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import render, get_object_or_404, redirect
-from post_maker.models import Post
+from post_maker.models import Post, LikeDislike
 from post_maker.views import paginator, Subscription
 from taggit.models import Tag
 from django.http import JsonResponse
@@ -59,6 +59,8 @@ def profile(request, username, tag_slug=None):
     page_obj = paginator(request, posts, 5)
     subscriptions = Subscription.objects.filter(subscriber=request.user).values_list('sub_author', flat=True)
     is_owner = request.user == user
+    user_likes = LikeDislike.objects.filter(user=request.user, post__in=posts)
+    likes_dict = {ld.post.id: ld.is_like for ld in user_likes}
 
     context = {"profile":profile,
                "username":username,
@@ -69,7 +71,8 @@ def profile(request, username, tag_slug=None):
                "user":user,
                "tag":tag,
                'is_subscribed': user.id in subscriptions,
-               "is_owner": is_owner}
+               "is_owner": is_owner,
+               "likes_dict": likes_dict}
     return render(request, template, context)
 
 @login_required

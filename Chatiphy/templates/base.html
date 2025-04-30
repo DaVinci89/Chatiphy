@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="{% static 'css/comments_styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function likeDislikePost(postId, isLike) {
+            fetch(`/like-dislike/${postId}/?is_like=${isLike}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(`likes-count-${postId}`).innerText = data.likes_count;
+                    document.getElementById(`dislikes-count-${postId}`).innerText = data.dislikes_count;
+                });
+        }
+    </script>
 </head>
 <body>
     <header>

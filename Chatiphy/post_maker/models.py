@@ -192,3 +192,15 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.subscriber.username} followed {self.sub_author.username}"
+
+class LikeDislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes_dislikes")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes_dislikes")
+    is_like = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
+    def __str__(self):
+        return f"{'Like' if self.is_like else 'Dislike'} від {self.user.username} для посту {self.post.id}"
+
