@@ -61,17 +61,25 @@
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </div>
-            {% with likes_dict|get_item:post.id as liked %}
-            <button id="like-btn-{{ post.id }}"
-                    class="{% if liked %}active-like{% endif %}"
-                    onclick="likeDislikePost({{ post.id }}, true)">Like</button>
+            {% with likes_dict|get_item:latest.id as liked %}
+            <div class="like-dislike-container">
+            <button id="like-btn-{{ latest.id }}"
+                class="like-btn {% if liked is True %}active-like{% endif %}"
+                onclick="likeDislikePost({{ latest.id }}, true)">
+                👍 Like
+            </button>
 
-            <button id="dislike-btn-{{ post.id }}"
-                    class="{% if liked %}active-dislike{% endif %}"
-                    onclick="likeDislikePost({{ post.id }}, false)">Dislike</button>
-            {% endwith %}
-            <p>Likes: <span id="likes-count-{{ post.id }}">{{ post.likes_count }}</span></p>
-            <p>Dislikes: <span id="dislikes-count-{{ post.id }}">{{ post.dislikes_count }}</span></p>
+            <button id="dislike-btn-{{ latest.id }}"
+                class="dislike-btn {% if liked is False %}active-dislike{% endif %}"
+                onclick="likeDislikePost({{ latest.id }}, false)">
+                👎 Dislike
+            </button>
+        </div>
+        {% endwith %}
+
+        <p>Likes: <span id="likes-count-{{ latest.id }}">{{ latest|count_likes }}</span></p>
+        <p>Dislikes: <span id="dislikes-count-{{ latest.id }}">{{ latest|count_dislikes }}</span></p>
+
             <a href="{{ latest.get_absolute_url }}" class="read-more">Read more</a>
         </div>
         <br>

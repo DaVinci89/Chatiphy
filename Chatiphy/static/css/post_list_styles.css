@@ -243,6 +243,33 @@
     font-weight: bold;
 }
 
+.like-dislike-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.like-btn, .dislike-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #eee;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.like-btn.active-like {
+    background-color: #d4edda; /* світло-зелений */
+    color: #155724;
+    font-weight: bold;
+}
+
+.dislike-btn.active-dislike {
+    background-color: #f8d7da; /* світло-червоний */
+    color: #721c24;
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     .post-item {
         padding: 20px; /* Менші відступи */
